@@ -484,7 +484,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }));
     const userName = roommates.find(r => r.id === activeUserId)?.name || 'Someone';
     addAuditLog('supply', `Supply status changed: "${itemName}" marked ${nextStatusVal.toUpperCase()} by ${userName}`);
-    triggerFeedback('Supply status updated', 'info');
   };
 
   const handleAutoAssignBuyer = (supplyId: string) => {
@@ -513,7 +512,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     };
 
     setNotifications(prev => [newNotif, ...prev]);
-    triggerFeedback(`Auto-assigned ${supply.name} to ${assignee.name}!`, 'success');
   };
 
   const handleNudgeRoommate = (nudgeeId: string, choreTitle: string) => {
@@ -582,7 +580,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     };
 
     setNotifications(prev => [newNotif, ...prev]);
-    triggerFeedback(`Chore "${chore.title}" submitted!`, 'success');
   };
 
   const handleClaimChore = (choreId: string) => {
@@ -596,7 +593,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }));
     const userName = roommates.find(r => r.id === activeUserId)?.name || 'Someone';
     addAuditLog('chore', `Chore claimed: "${chore.title}" claimed by ${userName}`);
-    triggerFeedback('Chore claimed successfully!', 'success');
   };
 
   const handleAddExpense = (e: React.FormEvent) => {
@@ -643,7 +639,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     setNotifications(prev => [newNotif, ...prev]);
     setNewExpenseDesc('');
     setNewExpenseAmount('');
-    triggerFeedback('Expense logged and balanced!', 'success');
   };
 
   const handleAddSupply = (e: React.FormEvent) => {
@@ -662,7 +657,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     const userName = roommates.find(r => r.id === activeUserId)?.name || 'Someone';
     addAuditLog('supply', `Supply added: "${newSupplyName}" created by ${userName}`);
     setNewSupplyName('');
-    triggerFeedback(`Added "${newSupplyName}" to stock list`, 'success');
   };
 
   const handleSettleBalances = (e: React.FormEvent) => {
@@ -712,7 +706,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     setNotifications(prev => [newNotif, ...prev]);
 
     setSettleAmount('');
-    triggerFeedback(`Recorded settlement: $${amountNum.toFixed(2)} transferred!`, 'success');
   };
 
   const handleRenameSupply = (supplyId: string, newName: string) => {
@@ -730,7 +723,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     setSupplies(prev => prev.filter(s => s.id !== supplyId));
     const userName = roommates.find(r => r.id === activeUserId)?.name || 'Someone';
     addAuditLog('supply', `Supply removed: "${target.name}" deleted by ${userName}`);
-    triggerFeedback(`Removed "${target.name}" from stock list`, 'info');
   };
 
   const handleToggleGroupLeader = (roommateId: string) => {
@@ -739,7 +731,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       isGroupLeader: r.id === roommateId
     })));
     const target = roommates.find(r => r.id === roommateId);
-    triggerFeedback(`${target?.name} is now the designated leader`, 'info');
   };
 
   return (

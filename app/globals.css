@@ -56,7 +56,8 @@
 }
 
 /* Accessibility colorblind modes */
-.deuteranopia, .protanopia {
+.deuteranopia,
+.protanopia {
   --gold-bg: #eab308;
   --gold-hover: #ca8a04;
   --gold-border: rgba(234, 179, 8, 0.25);
@@ -156,13 +157,16 @@ body {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--background);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 9999px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
@@ -173,6 +177,7 @@ body {
     opacity: 0;
     transform: translateY(4px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -195,7 +200,7 @@ body {
 .app-main {
   flex: 1;
   width: 100%;
-  max-width: 56rem;
+  max-width: 70rem;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1.5rem;

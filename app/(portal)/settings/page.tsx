@@ -41,13 +41,11 @@ export default function SettingsPage() {
               setBusyWeekMode(!busyWeekMode);
               triggerFeedback(busyWeekMode ? 'Snooze deactivated' : 'Snooze activated', 'info');
             }}
-            className={`w-10 h-6 rounded-full p-0.5 transition-colors duration-200 focus:outline-none shrink-0 ${
-              busyWeekMode ? 'bg-amber-400' : 'bg-[var(--input-bg)] border border-[var(--border-color)]'
-            }`}
+            className={`w-10 h-6 rounded-full p-0.5 transition-colors duration-200 focus:outline-none shrink-0 ${busyWeekMode ? 'bg-amber-400' : 'bg-[var(--input-bg)] border border-[var(--border-color)]'
+              }`}
           >
-            <div className={`w-4 h-4 rounded-full bg-black transition-transform duration-200 ${
-              busyWeekMode ? 'transform translate-x-4' : ''
-            }`} />
+            <div className={`w-4 h-4 rounded-full bg-black transition-transform duration-200 ${busyWeekMode ? 'transform translate-x-4' : ''
+              }`} />
           </button>
         </div>
 
@@ -65,7 +63,6 @@ export default function SettingsPage() {
               value={accessibilityMode}
               onChange={(e) => {
                 setAccessibilityMode(e.target.value as any);
-                triggerFeedback(`Accessibility set to: ${e.target.value}`, 'info');
               }}
               className="bg-transparent text-xs text-[var(--foreground)] font-bold focus:outline-none cursor-pointer"
             >
@@ -89,15 +86,12 @@ export default function SettingsPage() {
           <button
             onClick={() => {
               setSoundEnabled(!soundEnabled);
-              triggerFeedback(soundEnabled ? 'Audio tones off' : 'Audio tones on', 'info');
             }}
-            className={`w-10 h-6 rounded-full p-0.5 transition-colors duration-200 focus:outline-none shrink-0 ${
-              soundEnabled ? 'bg-amber-400' : 'bg-[var(--input-bg)] border border-[var(--border-color)]'
-            }`}
+            className={`w-10 h-6 rounded-full p-0.5 transition-colors duration-200 focus:outline-none shrink-0 ${soundEnabled ? 'bg-amber-400' : 'bg-[var(--input-bg)] border border-[var(--border-color)]'
+              }`}
           >
-            <div className={`w-4 h-4 rounded-full bg-black transition-transform duration-200 ${
-              soundEnabled ? 'transform translate-x-4' : ''
-            }`} />
+            <div className={`w-4 h-4 rounded-full bg-black transition-transform duration-200 ${soundEnabled ? 'transform translate-x-4' : ''
+              }`} />
           </button>
         </div>
 
@@ -113,15 +107,12 @@ export default function SettingsPage() {
             onClick={() => {
               const nextTheme = themeMode === 'dark' ? 'light' : 'dark';
               setThemeMode(nextTheme);
-              triggerFeedback(`Theme switched to ${nextTheme}`, 'info');
             }}
-            className={`w-10 h-6 rounded-full p-0.5 transition-colors duration-200 focus:outline-none shrink-0 ${
-              themeMode === 'light' ? 'bg-amber-400' : 'bg-[var(--input-bg)] border border-[var(--border-color)]'
-            }`}
+            className={`w-10 h-6 rounded-full p-0.5 transition-colors duration-200 focus:outline-none shrink-0 ${themeMode === 'light' ? 'bg-amber-400' : 'bg-[var(--input-bg)] border border-[var(--border-color)]'
+              }`}
           >
-            <div className={`w-4 h-4 rounded-full bg-black transition-transform duration-200 ${
-              themeMode === 'light' ? 'transform translate-x-4' : ''
-            }`} />
+            <div className={`w-4 h-4 rounded-full bg-black transition-transform duration-200 ${themeMode === 'light' ? 'transform translate-x-4' : ''
+              }`} />
           </button>
         </div>
       </div>

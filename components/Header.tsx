@@ -41,7 +41,7 @@ export const Header: React.FC = () => {
   return (
     <header className="sticky top-0 z-30 w-full bg-[var(--background)]/90 backdrop-blur-md border-b border-[var(--border-color)] py-4 px-4 sm:px-6 theme-transition-bg">
       <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
-        
+
         {/* Brand */}
         <div className="shrink-0 cursor-pointer" onClick={() => navTo('/dashboard')}>
           <span className="font-black text-lg tracking-wider text-[var(--foreground)]">
@@ -53,33 +53,29 @@ export const Header: React.FC = () => {
         <nav className="hidden md:flex items-center gap-1 bg-[var(--input-bg)]/80 p-1.5 rounded-2xl border border-[var(--border-color)] theme-transition-bg">
           <button
             onClick={() => navTo('/dashboard')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
-              getIsActive('/dashboard') ? 'bg-amber-400 text-black shadow-md' : 'text-[var(--text-muted)] hover:text-[var(--foreground)]'
-            }`}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${getIsActive('/dashboard') ? 'bg-amber-400 text-black shadow-md' : 'text-[var(--text-muted)] hover:text-[var(--foreground)]'
+              }`}
           >
             Dashboard
           </button>
           <button
             onClick={() => navTo('/chores')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
-              getIsActive('/chores') ? 'bg-amber-400 text-black shadow-md' : 'text-[var(--text-muted)] hover:text-[var(--foreground)]'
-            }`}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${getIsActive('/chores') ? 'bg-amber-400 text-black shadow-md' : 'text-[var(--text-muted)] hover:text-[var(--foreground)]'
+              }`}
           >
             Chores
           </button>
           <button
             onClick={() => navTo('/supplies')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
-              getIsActive('/supplies') ? 'bg-amber-400 text-black shadow-md' : 'text-[var(--text-muted)] hover:text-[var(--foreground)]'
-            }`}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${getIsActive('/supplies') ? 'bg-amber-400 text-black shadow-md' : 'text-[var(--text-muted)] hover:text-[var(--foreground)]'
+              }`}
           >
             Supplies & Expenses
           </button>
           <button
             onClick={() => navTo('/accountability')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
-              getIsActive('/accountability') ? 'bg-amber-400 text-black shadow-md' : 'text-[var(--text-muted)] hover:text-[var(--foreground)]'
-            }`}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${getIsActive('/accountability') ? 'bg-amber-400 text-black shadow-md' : 'text-[var(--text-muted)] hover:text-[var(--foreground)]'
+              }`}
           >
             Accountability Logs
           </button>
@@ -137,13 +133,11 @@ export const Header: React.FC = () => {
           <button
             onClick={() => {
               navTo('/settings');
-              triggerFeedback('Settings opened', 'info');
             }}
-            className={`p-1.5 rounded-lg border transition-colors theme-transition-bg ${
-              getIsActive('/settings')
+            className={`p-1.5 rounded-lg border transition-colors theme-transition-bg ${getIsActive('/settings')
                 ? 'bg-amber-400 text-black border-amber-500 shadow-md'
                 : 'text-[var(--text-muted)] hover:text-[var(--foreground)] bg-[var(--input-bg)] border border-[var(--border-color)]'
-            }`}
+              }`}
             title="Settings Options"
           >
             <SettingsIcon size={14} />
@@ -171,33 +165,29 @@ export const Header: React.FC = () => {
       <div className="md:hidden border-t border-[var(--border-color)] bg-[var(--card-bg)] p-2 flex justify-around text-xs font-semibold theme-transition-bg">
         <button
           onClick={() => navTo('/dashboard')}
-          className={`flex-1 py-1.5 rounded-lg text-[10px] font-bold text-center ${
-            getIsActive('/dashboard') ? 'bg-amber-400 text-black shadow-md' : 'text-[var(--text-muted)]'
-          }`}
+          className={`flex-1 py-1.5 rounded-lg text-[10px] font-bold text-center ${getIsActive('/dashboard') ? 'bg-amber-400 text-black shadow-md' : 'text-[var(--text-muted)]'
+            }`}
         >
           Dashboard
         </button>
         <button
           onClick={() => navTo('/chores')}
-          className={`flex-1 py-1.5 rounded-lg text-[10px] font-bold text-center ${
-            getIsActive('/chores') ? 'bg-amber-400 text-black shadow-md' : 'text-[var(--text-muted)]'
-          }`}
+          className={`flex-1 py-1.5 rounded-lg text-[10px] font-bold text-center ${getIsActive('/chores') ? 'bg-amber-400 text-black shadow-md' : 'text-[var(--text-muted)]'
+            }`}
         >
           Chores
         </button>
         <button
           onClick={() => navTo('/supplies')}
-          className={`flex-1 py-1.5 rounded-lg text-[10px] font-bold text-center ${
-            getIsActive('/supplies') ? 'bg-amber-400 text-black shadow-md' : 'text-[var(--text-muted)]'
-          }`}
+          className={`flex-1 py-1.5 rounded-lg text-[10px] font-bold text-center ${getIsActive('/supplies') ? 'bg-amber-400 text-black shadow-md' : 'text-[var(--text-muted)]'
+            }`}
         >
           Supplies
         </button>
         <button
           onClick={() => navTo('/accountability')}
-          className={`flex-1 py-1.5 rounded-lg text-[10px] font-bold text-center ${
-            getIsActive('/accountability') ? 'bg-amber-400 text-black shadow-md' : 'text-[var(--text-muted)]'
-          }`}
+          className={`flex-1 py-1.5 rounded-lg text-[10px] font-bold text-center ${getIsActive('/accountability') ? 'bg-amber-400 text-black shadow-md' : 'text-[var(--text-muted)]'
+            }`}
         >
           Accountability
         </button>

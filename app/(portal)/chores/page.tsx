@@ -77,7 +77,7 @@ export default function ChoresPage() {
                       : isExpanded
                         ? 'bg-[var(--input-bg)] border-[var(--border-color)] shadow-md'
                         : 'bg-[var(--card-bg)] border-[var(--border-color)] hover:border-amber-400/40'
-                  }`}
+                    }`}
                 >
                   <div
                     onClick={() => !chore.completed && setActiveChoreDetails(isExpanded ? null : chore.id)}
@@ -272,7 +272,6 @@ export default function ChoresPage() {
                     addAuditLog('chore', `Recurring template added: "${titleInput.value}" assigned to ${assignSelect.value ? roommates.find(r => r.id === assignSelect.value)?.name : 'Unassigned'} [${newRec.points} pts]`);
                     titleInput.value = '';
                     pointsInput.value = '';
-                    triggerFeedback('Recurring Chore Template added!', 'success');
                   }}
                   className="text-[9px] px-3.5 py-1.5 rounded-xl font-bold transition-all btn-primary-gold"
                 >

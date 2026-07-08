@@ -53,13 +53,11 @@ export default function SuppliesPage() {
               type="button"
               onClick={() => {
                 setEditSuppliesMode(!editSuppliesMode);
-                triggerFeedback(editSuppliesMode ? 'Edit mode disabled' : 'Edit mode activated', 'info');
               }}
-              className={`text-xs px-3.5 py-1.5 rounded-xl border flex items-center gap-1 transition-all ${
-                editSuppliesMode
+              className={`text-xs px-3.5 py-1.5 rounded-xl border flex items-center gap-1 transition-all ${editSuppliesMode
                   ? 'bg-amber-400 text-black border-amber-500 font-bold'
                   : 'bg-[var(--input-bg)] text-[var(--text-muted)] border border-[var(--border-color)] theme-transition-bg'
-              }`}
+                }`}
               title="Edit / Delete supply list"
             >
               <Edit3 size={12} /> {editSuppliesMode ? 'Done' : 'Edit List'}
@@ -115,13 +113,12 @@ export default function SuppliesPage() {
                         <div className="flex items-center gap-2 mt-1 flex-wrap">
                           <button
                             onClick={() => handleReportLowSupply(supply.id)}
-                            className={`text-[8px] px-2 py-0.5 rounded font-mono uppercase font-bold border ${
-                              supply.status === 'stocked'
+                            className={`text-[8px] px-2 py-0.5 rounded font-mono uppercase font-bold border ${supply.status === 'stocked'
                                 ? 'bg-[var(--input-bg)] text-[var(--foreground)] border-[var(--border-color)] theme-transition-bg'
                                 : supply.status === 'low'
                                   ? 'bg-amber-950/30 text-amber-400 border-amber-500/20'
                                   : 'bg-rose-950/30 text-rose-400 border-rose-500/20 animate-pulse'
-                            }`}
+                              }`}
                           >
                             {supply.status}
                           </button>
