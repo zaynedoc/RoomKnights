@@ -682,168 +682,113 @@ export default function Home() {
 
   // 2. Main Portal Application Dashboard View (Jane/John/Alex authenticated)
   return (
-    <div className="flex-1 flex flex-col md:flex-row">
-
-      {/* Left Navigation Sidebar */}
-      <aside className="w-full md:w-64 bg-[#111115] border-b md:border-b-0 md:border-r border-neutral-800/80 flex flex-col shrink-0">
-
-        {/* Header Brand - EMOJIS & CAP3104 TEXT REMOVED */}
-        <div className="p-6 border-b border-neutral-800/80">
-          <span className="font-black text-xl tracking-wider text-white block">
-            ROOM<span className="text-amber-400">KNIGHTS</span>
-          </span>
-        </div>
-
-        {/* Navigation Links */}
-        <nav className="flex-1 p-4 space-y-1.5">
-          <button
-            onClick={() => { setActiveTab('dashboard'); }}
-            className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-xs font-semibold transition-all duration-200 ${activeTab === 'dashboard'
-                ? `bg-neutral-800/80 text-white border-l-4 border-amber-400`
-                : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-900/50'
-              }`}
-          >
-            <CheckSquare size={16} className={activeTab === 'dashboard' ? 'text-amber-400' : ''} />
-            <span>Dashboard</span>
-            {userChores.length > 0 && (
-              <span className="ml-auto bg-amber-400/10 text-amber-400 text-[10px] px-2 py-0.5 rounded-full font-bold">
-                {userChores.length}
-              </span>
-            )}
-          </button>
-
-          <button
-            onClick={() => { setActiveTab('supplies'); }}
-            className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-xs font-semibold transition-all duration-200 ${activeTab === 'supplies'
-                ? `bg-neutral-800/80 text-white border-l-4 border-amber-400`
-                : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-900/50'
-              }`}
-          >
-            <ShoppingCart size={16} className={activeTab === 'supplies' ? 'text-amber-400' : ''} />
-            <span>Supplies & Expenses</span>
-            {supplies.filter(s => s.status !== 'stocked').length > 0 && (
-              <span className="ml-auto bg-rose-500/10 text-rose-400 text-[10px] px-2 py-0.5 rounded-full font-bold">
-                {supplies.filter(s => s.status !== 'stocked').length}
-              </span>
-            )}
-          </button>
-
-          <button
-            onClick={() => { setActiveTab('accountability'); }}
-            className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-xs font-semibold transition-all duration-200 ${activeTab === 'accountability'
-                ? `bg-neutral-800/80 text-white border-l-4 border-amber-400`
-                : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-900/50'
-              }`}
-          >
-            <ShieldAlert size={16} className={activeTab === 'accountability' ? 'text-amber-400' : ''} />
-            <span>Accountability Hub</span>
-          </button>
-
-          <button
-            onClick={() => { setActiveTab('settings'); }}
-            className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-xs font-semibold transition-all duration-200 ${activeTab === 'settings'
-                ? `bg-neutral-800/80 text-white border-l-4 border-amber-400`
-                : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-900/50'
-              }`}
-          >
-            <SettingsIcon size={16} className={activeTab === 'settings' ? 'text-amber-400' : ''} />
-            <span>Settings</span>
-          </button>
-        </nav>
-
-        {/* Sidebar Logged-in User Profile & Log Out block */}
-        <div className="p-4 border-t border-neutral-800/80 bg-neutral-950/20 space-y-3">
-          <div className="flex items-center gap-3">
-            {/* Initials Avatar */}
-            <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${activeUserObj?.avatarColor} flex items-center justify-center font-bold text-xs text-white`}>
-              {activeUserObj?.initials}
-            </div>
-            <div className="min-w-0 flex-1">
-              <span className="block text-xs font-bold text-white truncate">{activeUserObj?.name}</span>
-              <span className="block text-[10px] text-neutral-400 truncate">{activeUserObj?.role}</span>
-            </div>
+    <div className="min-h-screen bg-[#0d0d0f] text-neutral-100 flex flex-col">
+      {/* Top Header Navigation Bar (Centered like portfolio header) */}
+      <header className="sticky top-0 z-30 w-full bg-[#0d0d0f]/90 backdrop-blur-md border-b border-neutral-800/80 py-4 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
+          
+          {/* Brand */}
+          <div className="shrink-0">
+            <span className="font-black text-lg tracking-wider text-white">
+              ROOM<span className="text-amber-400">KNIGHTS</span>
+            </span>
           </div>
 
-          <button
-            onClick={handleLogout}
-            className="w-full py-2 rounded-xl border border-neutral-800 hover:border-rose-500/30 hover:bg-rose-950/10 text-neutral-400 hover:text-rose-400 text-xs font-medium transition-all duration-150 flex items-center justify-center gap-2"
-          >
-            <LogOut size={12} />
-            <span>Sign Out</span>
-          </button>
-        </div>
-      </aside>
+          {/* Navigation Tabs - Centered on Desktop */}
+          <nav className="hidden md:flex items-center gap-1 bg-neutral-900/60 p-1.5 rounded-2xl border border-neutral-800/80">
+            <button
+              onClick={() => setActiveTab('dashboard')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
+                activeTab === 'dashboard' ? 'bg-amber-400 text-black shadow-md' : 'text-neutral-400 hover:text-neutral-200'
+              }`}
+            >
+              Dashboard
+            </button>
+            <button
+              onClick={() => setActiveTab('supplies')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
+                activeTab === 'supplies' ? 'bg-amber-400 text-black shadow-md' : 'text-neutral-400 hover:text-neutral-200'
+              }`}
+            >
+              Supplies & Expenses
+            </button>
+            <button
+              onClick={() => setActiveTab('accountability')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
+                activeTab === 'accountability' ? 'bg-amber-400 text-black shadow-md' : 'text-neutral-400 hover:text-neutral-200'
+              }`}
+            >
+              Accountability Hub
+            </button>
+            <button
+              onClick={() => setActiveTab('settings')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
+                activeTab === 'settings' ? 'bg-amber-400 text-black shadow-md' : 'text-neutral-400 hover:text-neutral-200'
+              }`}
+            >
+              Settings
+            </button>
+          </nav>
 
-      {/* Main Panel Content Area */}
-      <main className="flex-1 flex flex-col min-w-0 bg-[#0d0d0f]">
-
-        {/* Sticky top sub-header panel */}
-        <header className="h-16 border-b border-neutral-800/80 bg-[#111115]/80 backdrop-blur-md flex items-center justify-between px-6 sticky top-0 z-30">
-          <div>
-            <span className="text-xs text-neutral-400 uppercase tracking-widest font-semibold block">CURRENT WORKSPACE</span>
-            <span className="text-sm font-bold text-white">UCF Knights Shared Suite</span>
-          </div>
-
-          {/* Right Header Navigation Accessories */}
-          <div className="flex items-center gap-4">
-
-            {/* Accessibility dropdown */}
-            <div className="flex items-center gap-2 bg-neutral-900 border border-neutral-800 px-3 py-1.5 rounded-xl">
-              <Eye size={14} className="text-amber-400" />
+          {/* Right Accessories */}
+          <div className="flex items-center gap-3 shrink-0">
+            {/* Accessibility option toggle */}
+            <div className="hidden sm:flex items-center gap-1.5 bg-neutral-900 border border-neutral-800 px-2.5 py-1 rounded-xl">
+              <Eye size={12} className="text-amber-400" />
               <select
                 value={accessibilityMode}
                 onChange={(e) => {
                   setAccessibilityMode(e.target.value as any);
                   triggerFeedback(`Accessibility set to: ${e.target.value}`, 'info');
                 }}
-                className="bg-transparent text-xs text-neutral-300 font-bold focus:outline-none cursor-pointer"
+                className="bg-transparent text-[10px] text-neutral-300 font-bold focus:outline-none cursor-pointer"
               >
-                <option value="none" className="bg-neutral-900">Normal Contrast</option>
-                <option value="deuteranopia" className="bg-neutral-900">Deuteranopia Adjustment</option>
-                <option value="protanopia" className="bg-neutral-900">Protanopia Adjustment</option>
-                <option value="tritanopia" className="bg-neutral-900">Tritanopia Adjustment</option>
-                <option value="high-contrast" className="bg-neutral-900">High Contrast Override</option>
+                <option value="none" className="bg-neutral-900">Contrast</option>
+                <option value="deuteranopia" className="bg-neutral-900">Deuteranopia</option>
+                <option value="protanopia" className="bg-neutral-900">Protanopia</option>
+                <option value="tritanopia" className="bg-neutral-900">Tritanopia</option>
+                <option value="high-contrast" className="bg-neutral-900">High Contrast</option>
               </select>
             </div>
 
-            {/* Notification alert log */}
+            {/* Notification alert bells */}
             <div className="relative">
               <button
                 onClick={() => setNotificationsOpen(!notificationsOpen)}
-                className="p-2 text-neutral-400 hover:text-white rounded-lg bg-neutral-900 border border-neutral-800 transition-colors"
+                className="p-1.5 text-neutral-400 hover:text-white rounded-lg bg-neutral-900 border border-neutral-800 transition-colors"
               >
-                <Bell size={16} />
+                <Bell size={14} />
                 {notifications.filter(n => !n.read).length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-rose-500 text-white rounded-full text-[8px] flex items-center justify-center font-bold">
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-rose-500 text-white rounded-full text-[7px] flex items-center justify-center font-bold">
                     {notifications.filter(n => !n.read).length}
                   </span>
                 )}
               </button>
 
               {notificationsOpen && (
-                <div className="absolute right-0 mt-3 w-80 bg-[#16161c] border border-neutral-800/90 rounded-2xl shadow-2xl overflow-hidden z-50">
-                  <div className="p-4 border-b border-neutral-800 flex items-center justify-between">
-                    <span className="font-bold text-sm text-white">Notifications Log</span>
+                <div className="absolute right-0 mt-2 w-72 bg-[#16161c] border border-neutral-800/90 rounded-2xl shadow-2xl overflow-hidden z-50">
+                  <div className="p-3 border-b border-neutral-800 flex items-center justify-between">
+                    <span className="font-bold text-xs text-white">Notifications Log</span>
                     <button
                       onClick={() => {
                         setNotifications(prev => prev.map(n => ({ ...n, read: true })));
                         triggerFeedback('All logs read', 'info');
                       }}
-                      className="text-xs text-amber-400 hover:text-amber-300 font-medium"
+                      className="text-[10px] text-amber-400 hover:text-amber-300 font-semibold"
                     >
                       Clear unread
                     </button>
                   </div>
-                  <div className="divide-y divide-neutral-800 max-h-80 overflow-y-auto">
+                  <div className="divide-y divide-neutral-800 max-h-60 overflow-y-auto">
                     {notifications.length === 0 ? (
-                      <div className="p-8 text-center text-xs text-neutral-500">
+                      <div className="p-6 text-center text-xs text-neutral-500 font-medium">
                         Log is empty
                       </div>
                     ) : (
                       notifications.map((n) => (
-                        <div key={n.id} className={`p-3.5 transition-colors ${n.read ? 'opacity-65' : 'bg-neutral-900/30'}`}>
-                          <p className="text-xs text-neutral-200 leading-relaxed font-semibold">{n.text}</p>
-                          <span className="text-[9px] text-neutral-500 block mt-1">{n.timestamp}</span>
+                        <div key={n.id} className={`p-3 transition-colors ${n.read ? 'opacity-60' : 'bg-neutral-900/30'}`}>
+                          <p className="text-[11px] text-neutral-200 leading-relaxed font-semibold">{n.text}</p>
+                          <span className="text-[8px] text-neutral-500 block mt-1">{n.timestamp}</span>
                         </div>
                       ))
                     )}
@@ -852,11 +797,61 @@ export default function Home() {
               )}
             </div>
 
-          </div>
-        </header>
+            {/* Initials Avatar */}
+            <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${activeUserObj?.avatarColor} flex items-center justify-center font-bold text-xs text-white shrink-0`}>
+              {activeUserObj?.initials}
+            </div>
 
-        {/* Tab View Container */}
-        <div className="flex-1 p-6 space-y-6 overflow-y-auto">
+            {/* Logout button */}
+            <button
+              onClick={handleLogout}
+              className="p-1.5 text-neutral-400 hover:text-rose-400 rounded-lg bg-neutral-900 border border-neutral-800 transition-colors"
+              title="Sign Out"
+            >
+              <LogOut size={14} />
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Nav Bar - visible only on mobile screens */}
+        <div className="md:hidden border-t border-neutral-800 bg-[#111115] p-2 flex justify-around text-xs font-semibold">
+          <button
+            onClick={() => setActiveTab('dashboard')}
+            className={`flex-1 py-1.5 rounded-lg text-[10px] font-bold text-center ${
+              activeTab === 'dashboard' ? 'bg-amber-400 text-black shadow-md' : 'text-neutral-400'
+            }`}
+          >
+            Dashboard
+          </button>
+          <button
+            onClick={() => setActiveTab('supplies')}
+            className={`flex-1 py-1.5 rounded-lg text-[10px] font-bold text-center ${
+              activeTab === 'supplies' ? 'bg-amber-400 text-black shadow-md' : 'text-neutral-400'
+            }`}
+          >
+            Supplies
+          </button>
+          <button
+            onClick={() => setActiveTab('accountability')}
+            className={`flex-1 py-1.5 rounded-lg text-[10px] font-bold text-center ${
+              activeTab === 'accountability' ? 'bg-amber-400 text-black shadow-md' : 'text-neutral-400'
+            }`}
+          >
+            Accountability
+          </button>
+          <button
+            onClick={() => setActiveTab('settings')}
+            className={`flex-1 py-1.5 rounded-lg text-[10px] font-bold text-center ${
+              activeTab === 'settings' ? 'bg-amber-400 text-black shadow-md' : 'text-neutral-400'
+            }`}
+          >
+            Settings
+          </button>
+        </div>
+      </header>
+
+      {/* Main Content Area - Centered like the portfolio content */}
+      <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-6">
 
           {/* Non-intrusive Inline success/information alert box (replaces bouncing top-right toast) */}
           {inlineNotification && (
@@ -1545,9 +1540,7 @@ export default function Home() {
             </div>
           )}
 
-        </div>
       </main>
-
     </div>
   );
 }
