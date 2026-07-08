@@ -79,10 +79,10 @@ export default function ChoresPage() {
                     ? 'bg-[var(--card-bg)]/30 border-[var(--border-color)]/40 opacity-60'
                     : chore.missed
                       ? 'bg-rose-950/5 border-rose-900/40'
-                      : isExpanded
-                        ? 'bg-[var(--input-bg)] border-[var(--border-color)] shadow-md'
-                        : 'bg-[var(--card-bg)] border-[var(--border-color)] hover:border-amber-400/40'
-                    }`}
+                        : isExpanded
+                          ? 'bg-[var(--input-bg)] border-[var(--border-color)] shadow-md'
+                          : 'bg-[var(--card-bg)] border-[var(--border-color)] chore-card-hover'
+                      }`}
                 >
                   <div
                     onClick={() => !chore.completed && setActiveChoreDetails(isExpanded ? null : chore.id)}
@@ -90,11 +90,13 @@ export default function ChoresPage() {
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${chore.completed
-                        ? 'bg-amber-400 border-amber-400 text-black'
+                        ? 'text-black'
                         : chore.missed
                           ? 'border-rose-500'
                           : 'border-neutral-600'
-                        }`}>
+                        }`}
+                        style={chore.completed ? { backgroundColor: 'var(--gold-bg)', borderColor: 'var(--gold-bg)' } : undefined}
+                      >
                         {chore.completed && <Check size={10} strokeWidth={4} />}
                       </div>
                       <div className="min-w-0">
@@ -109,7 +111,7 @@ export default function ChoresPage() {
 
                     <div className="flex items-center gap-2.5 shrink-0">
                       {/* Points badge */}
-                      <span className="text-[9px] font-mono font-bold bg-[var(--input-bg)] border border-[var(--border-color)] px-2.5 py-0.5 rounded-full text-amber-400 theme-transition-bg">
+                      <span className="pts-badge theme-transition-bg">
                         {chore.points} pts
                       </span>
 
@@ -145,8 +147,10 @@ export default function ChoresPage() {
                               onClick={() => handleToggleSubtask(chore.id, idx)}
                               className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-[var(--input-bg)]/80 cursor-pointer transition-colors"
                             >
-                              <div className={`w-3.5 h-3.5 rounded border flex items-center justify-center shrink-0 ${sub.done ? 'bg-amber-400 border-amber-400 text-black' : 'border-neutral-600'
-                                }`}>
+                              <div
+                                className={`w-3.5 h-3.5 rounded border flex items-center justify-center shrink-0 ${sub.done ? 'text-black' : 'border-neutral-600'}`}
+                                style={sub.done ? { backgroundColor: 'var(--gold-bg)', borderColor: 'var(--gold-bg)' } : undefined}
+                              >
                                 {sub.done && <Check size={8} strokeWidth={4} />}
                               </div>
                               <span className={`text-xs ${sub.done ? 'line-through text-[var(--text-muted)]' : 'text-[var(--foreground)]'}`}>
@@ -208,9 +212,10 @@ export default function ChoresPage() {
               setEditTemplatesMode(!editTemplatesMode);
             }}
             className={`text-xs px-3.5 py-1.5 rounded-xl border flex items-center gap-1 transition-all ${editTemplatesMode
-              ? 'bg-amber-400 text-black border-amber-500 font-bold'
+              ? 'text-black font-bold'
               : 'btn-primary-gold'
               }`}
+            style={editTemplatesMode ? { backgroundColor: 'var(--gold-bg)', borderColor: 'var(--gold-hover)' } : undefined}
           >
             <Edit3 size={12} />
             {editTemplatesMode ? 'Done' : 'Edit Templates'}
@@ -236,7 +241,7 @@ export default function ChoresPage() {
                         value={draft.title}
                         onChange={(e) => setDraft({ title: e.target.value })}
                         placeholder="Chore title..."
-                        className="w-full bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg px-2 py-1.5 text-xs text-[var(--foreground)] focus:outline-none focus:border-amber-400"
+                        className="w-full bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg px-2 py-1.5 text-xs text-[var(--foreground)] focus:outline-none focus:border-[var(--gold-text)]"
                       />
                       <div className="grid grid-cols-2 gap-2">
                         <select
@@ -254,7 +259,7 @@ export default function ChoresPage() {
                           value={draft.points}
                           onChange={(e) => setDraft({ points: parseInt(e.target.value) || 0 })}
                           placeholder="Points..."
-                          className="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg px-2 py-1 text-xs text-[var(--foreground)]"
+                          className="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg px-2 py-1 text-xs text-[var(--foreground)] focus:outline-none focus:border-[var(--gold-text)] transition-colors"
                         />
                       </div>
                       <div className="flex items-center justify-between gap-1.5">
@@ -264,7 +269,7 @@ export default function ChoresPage() {
                             type="number"
                             value={draft.daysInterval}
                             onChange={(e) => setDraft({ daysInterval: parseInt(e.target.value) || 7 })}
-                            className="w-12 bg-[var(--card-bg)] border border-[var(--border-color)] rounded px-1 py-0.5 text-[9px] text-center text-[var(--foreground)] font-bold"
+                            className="w-12 bg-[var(--card-bg)] border border-[var(--border-color)] rounded px-1 py-0.5 text-[9px] text-center text-[var(--foreground)] font-bold focus:outline-none focus:border-[var(--gold-text)] transition-colors"
                           />
                           <span className="text-[9px] text-[var(--text-muted)] font-semibold">days</span>
                         </div>
@@ -303,7 +308,7 @@ export default function ChoresPage() {
                 <div key={rec.id} className="p-3.5 bg-[var(--input-bg)]/60 border border-[var(--border-color)]/60 rounded-2xl flex flex-col gap-2 theme-transition-bg">
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-xs font-bold text-[var(--foreground)]">{rec.title}</span>
-                    <span className="text-[9px] font-mono font-bold bg-[var(--card-bg)] px-2 py-0.5 border border-[var(--border-color)] rounded-full text-amber-400 shrink-0">
+                    <span className="pts-badge">
                       {rec.points} pts
                     </span>
                   </div>
@@ -340,7 +345,7 @@ export default function ChoresPage() {
                 type="text"
                 id="new-rec-title"
                 placeholder="Chore name (e.g. Wipe Counter)..."
-                className="w-full bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl px-3 py-2 text-xs text-[var(--foreground)] theme-transition-bg focus:outline-none focus:border-amber-400"
+                className="w-full bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl px-3 py-2 text-xs text-[var(--foreground)] theme-transition-bg focus:outline-none focus:border-[var(--gold-text)]"
               />
 
               <div className="grid grid-cols-2 gap-2">
@@ -357,7 +362,7 @@ export default function ChoresPage() {
                   type="number"
                   id="new-rec-points"
                   placeholder="Points (e.g. 15)"
-                  className="bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl px-2.5 py-2 text-xs text-[var(--foreground)] theme-transition-bg"
+                  className="bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl px-2.5 py-2 text-xs text-[var(--foreground)] theme-transition-bg focus:outline-none focus:border-[var(--gold-text)] transition-colors"
                 />
               </div>
 

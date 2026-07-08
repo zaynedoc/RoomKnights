@@ -53,8 +53,8 @@ export default function AccountabilityPage() {
                   </div>
 
                   <div className="flex items-center gap-2">
-                    {idx === 0 && <Award size={14} className="text-amber-400" />}
-                    <span className="text-xs font-bold font-mono text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2.5 py-0.5 rounded-full">
+                    {idx === 0 && <Award size={14} className="accent-text" />}
+                    <span className="text-xs font-bold font-mono accent-text px-2.5 py-0.5 rounded-full" style={{ backgroundColor: 'color-mix(in srgb, var(--gold-bg) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--gold-bg) 20%, transparent)' }}>
                       {rm.score} pts
                     </span>
                   </div>
@@ -71,7 +71,7 @@ export default function AccountabilityPage() {
               <InfoTooltip text="Enforce chore completion. Roommates can send friendly notifications for overdue duties." direction="down" />
             </h2>
             <div className="text-xs text-[var(--text-muted)] bg-[var(--input-bg)] border border-[var(--border-color)] px-3 py-1 rounded-xl theme-transition-bg">
-              Leader: <strong className="text-amber-400">{roommates.find(r => r.isGroupLeader)?.name.split(' ')[0] || 'None'}</strong>
+              Leader: <strong className="accent-text">{roommates.find(r => r.isGroupLeader)?.name.split(' ')[0] || 'None'}</strong>
             </div>
           </div>
 

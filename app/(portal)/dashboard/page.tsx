@@ -94,7 +94,7 @@ export default function DashboardPage() {
               <span className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest block mb-1">Your Pending Chores</span>
               <span className="text-2xl font-black text-[var(--foreground)] font-mono">{userChores.length}</span>
             </div>
-            <div className="w-10 h-10 rounded-xl bg-[var(--input-bg)] border border-[var(--border-color)] flex items-center justify-center text-amber-400 theme-transition-bg">
+            <div className="w-10 h-10 rounded-xl bg-[var(--input-bg)] border border-[var(--border-color)] flex items-center justify-center accent-text theme-transition-bg">
               <CheckSquare size={18} />
             </div>
           </div>
@@ -109,7 +109,7 @@ export default function DashboardPage() {
             <InfoTooltip text="Gamified leaderboard tracking roommates by completed chores and household expenditures." direction="down" />
           </h2>
           <div className="text-xs text-[var(--text-muted)] bg-[var(--input-bg)] border border-[var(--border-color)] px-3 py-1.5 rounded-xl theme-transition-bg shrink-0">
-            Leader: <strong className="text-amber-400">{roommates.find(r => r.isGroupLeader)?.name.split(' ')[0] || 'None'}</strong>
+            Leader: <strong className="accent-text">{roommates.find(r => r.isGroupLeader)?.name.split(' ')[0] || 'None'}</strong>
           </div>
         </div>
 
@@ -118,8 +118,9 @@ export default function DashboardPage() {
             <div
               key={rm.id}
               className={`p-4 rounded-2xl bg-[var(--card-bg)]/40 border border-[var(--border-color)]/60 flex items-center justify-between theme-transition-bg ${
-                rm.id === activeUserId ? 'ring-1 ring-amber-400/50 bg-[var(--input-bg)]/10' : ''
+                rm.id === activeUserId ? 'ring-1 bg-[var(--input-bg)]/10' : ''
               }`}
+              style={rm.id === activeUserId ? { '--tw-ring-color': 'color-mix(in srgb, var(--gold-bg) 50%, transparent)' } as React.CSSProperties : undefined}
             >
               <div className="flex items-center gap-3 min-w-0">
                 <div className={`w-9 h-9 rounded-full bg-gradient-to-br ${rm.avatarColor} flex items-center justify-center font-bold text-xs text-white shrink-0 shadow-sm`}>
@@ -129,7 +130,7 @@ export default function DashboardPage() {
                   <h3 className="text-xs font-bold text-[var(--foreground)] flex items-center gap-1.5">
                     <span className="truncate">{rm.name}</span>
                     {rm.isGroupLeader && (
-                      <span className="text-[8px] bg-amber-400/10 text-amber-400 border border-amber-500/25 px-1.5 py-0.2 rounded shrink-0">
+                      <span className="text-[8px] px-1.5 py-0.5 rounded shrink-0 font-bold" style={{ backgroundColor: 'color-mix(in srgb, var(--gold-bg) 10%, transparent)', color: 'var(--gold-text)', border: '1px solid color-mix(in srgb, var(--gold-bg) 25%, transparent)' }}>
                         Lead
                       </span>
                     )}
@@ -142,7 +143,7 @@ export default function DashboardPage() {
 
               <div className="text-right shrink-0">
                 <span className="text-[9px] text-[var(--text-muted)] block">Score</span>
-                <span className={`text-xs font-mono font-bold ${rm.score > 70 ? 'text-amber-400' : 'text-[var(--text-muted)]'}`}>
+                <span className={`text-xs font-mono font-bold ${rm.score > 70 ? 'accent-text' : 'text-[var(--text-muted)]'}`}>
                   {rm.score} pts
                 </span>
               </div>
