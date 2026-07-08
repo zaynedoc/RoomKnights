@@ -437,7 +437,24 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   useEffect(() => {
     if (!mounted) return;
     localStorage.setItem('rk_theme_v2', themeMode);
+    // Apply theme to <html> so CSS vars cascade from root (fixes body bg + animated bg layer)
+    if (themeMode === 'light') {
+      document.documentElement.classList.add('theme-light');
+    } else {
+      document.documentElement.classList.remove('theme-light');
+    }
   }, [themeMode, mounted]);
+
+  // Apply stored theme on initial mount before first paint
+  useEffect(() => {
+    if (mounted) {
+      if (themeMode === 'light') {
+        document.documentElement.classList.add('theme-light');
+      } else {
+        document.documentElement.classList.remove('theme-light');
+      }
+    }
+  }, [mounted]);
 
   useEffect(() => {
     if (!mounted) return;

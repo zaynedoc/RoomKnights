@@ -85,6 +85,11 @@ export const Header: React.FC = () => {
             <button
               onClick={() => setNotificationsOpen(!notificationsOpen)}
               className="p-1.5 text-[var(--text-muted)] hover:text-[var(--foreground)] rounded-lg bg-[var(--input-bg)] border border-[var(--border-color)] transition-colors theme-transition-bg"
+              style={
+                notificationsOpen
+                  ? { backgroundColor: 'var(--gold-bg)', color: '#000', borderColor: 'var(--gold-hover)' }
+                  : undefined
+              }
             >
               <Bell size={14} />
               {notifications.filter(n => !n.read && n.type === 'alert').length > 0 && (
@@ -130,7 +135,7 @@ export const Header: React.FC = () => {
           {/* Settings cog button */}
           <button
             onClick={() => navTo('/settings')}
-            className="p-1.5 rounded-lg border transition-colors theme-transition-bg"
+            className="p-1.5 text-[var(--text-muted)] hover:text-[var(--foreground)] rounded-lg bg-[var(--input-bg)] border border-[var(--border-color)] transition-colors theme-transition-bg"
             style={
               getIsActive('/settings')
                 ? { backgroundColor: 'var(--gold-bg)', color: '#000', borderColor: 'var(--gold-hover)' }

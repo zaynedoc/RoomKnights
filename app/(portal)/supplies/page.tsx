@@ -98,7 +98,7 @@ export default function SuppliesPage() {
                         type="text"
                         value={supply.name}
                         onChange={(e) => handleRenameSupply(supply.id, e.target.value)}
-                        className="flex-1 bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl px-3 py-1.5 text-xs text-[var(--foreground)] theme-transition-bg focus:outline-none focus:border-amber-400 min-w-[120px]"
+                        className="flex-1 bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl px-3 py-1.5 text-xs text-[var(--foreground)] theme-transition-bg focus:outline-none focus:border-[var(--gold-text)] min-w-[120px]"
                       />
 
                       <div className="flex items-center gap-1.5 bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl px-2 py-1 text-xs shrink-0 theme-transition-bg">
@@ -144,9 +144,9 @@ export default function SuppliesPage() {
                             onClick={() => handleReportLowSupply(supply.id)}
                             className={`text-[8px] px-2 py-0.5 rounded font-mono uppercase font-bold border ${supply.status === 'stocked'
                               ? 'bg-[var(--input-bg)] text-[var(--foreground)] border-[var(--border-color)] theme-transition-bg'
-                                : supply.status === 'low'
-                                  ? 'bg-amber-950/30 accent-text border-amber-500/20'
-                                  : 'bg-rose-950/30 text-rose-400 border-rose-500/20 animate-pulse'
+                              : supply.status === 'low'
+                                ? 'bg-amber-950/30 accent-text border-amber-500/20'
+                                : 'bg-rose-950/30 text-rose-400 border-rose-500/20 animate-pulse'
                               }`}
                           >
                             {supply.status}
@@ -232,10 +232,6 @@ export default function SuppliesPage() {
                 </div>
               </div>
 
-              <div className="bg-[var(--input-bg)]/80 p-3 rounded-xl border border-[var(--border-color)] text-[10px] text-[var(--text-muted)] leading-relaxed theme-transition-bg">
-                Costs split equally ($ {(parseFloat(newExpenseAmount || '0') / 4).toFixed(2)} per roommate). Contributions update dynamically.
-              </div>
-
               <button
                 type="submit"
                 className="w-full py-2.5 rounded-xl text-xs font-bold btn-primary-gold"
@@ -294,7 +290,7 @@ export default function SuppliesPage() {
                       placeholder="0.00"
                       value={settleAmount}
                       onChange={(e) => setSettleAmount(e.target.value)}
-                      className="w-full bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl pl-8 pr-4 py-2 text-xs text-[var(--foreground)] focus:outline-none focus:border-amber-400 font-mono theme-transition-bg"
+                      className="w-full bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl pl-8 pr-4 py-2 text-xs text-[var(--foreground)] focus:outline-none focus:border-[var(--gold-text)] font-mono theme-transition-bg"
                     />
                   </div>
                 </div>

@@ -79,10 +79,10 @@ export default function ChoresPage() {
                     ? 'bg-[var(--card-bg)]/30 border-[var(--border-color)]/40 opacity-60'
                     : chore.missed
                       ? 'bg-rose-950/5 border-rose-900/40'
-                      : isExpanded
-                        ? 'bg-[var(--input-bg)] border-[var(--border-color)] shadow-md'
-                        : 'bg-[var(--card-bg)] border-[var(--border-color)] hover:border-amber-400/40'
-                    }`}
+                        : isExpanded
+                          ? 'bg-[var(--input-bg)] border-[var(--border-color)] shadow-md'
+                          : 'bg-[var(--card-bg)] border-[var(--border-color)] chore-card-hover'
+                      }`}
                 >
                   <div
                     onClick={() => !chore.completed && setActiveChoreDetails(isExpanded ? null : chore.id)}
@@ -241,7 +241,7 @@ export default function ChoresPage() {
                         value={draft.title}
                         onChange={(e) => setDraft({ title: e.target.value })}
                         placeholder="Chore title..."
-                        className="w-full bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg px-2 py-1.5 text-xs text-[var(--foreground)] focus:outline-none focus:border-amber-400"
+                        className="w-full bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg px-2 py-1.5 text-xs text-[var(--foreground)] focus:outline-none focus:border-[var(--gold-text)]"
                       />
                       <div className="grid grid-cols-2 gap-2">
                         <select
@@ -345,7 +345,7 @@ export default function ChoresPage() {
                 type="text"
                 id="new-rec-title"
                 placeholder="Chore name (e.g. Wipe Counter)..."
-                className="w-full bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl px-3 py-2 text-xs text-[var(--foreground)] theme-transition-bg focus:outline-none focus:border-amber-400"
+                className="w-full bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl px-3 py-2 text-xs text-[var(--foreground)] theme-transition-bg focus:outline-none focus:border-[var(--gold-text)]"
               />
 
               <div className="grid grid-cols-2 gap-2">

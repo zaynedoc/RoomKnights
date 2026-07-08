@@ -131,8 +131,8 @@ export default function SettingsPage() {
                     if (opt.id !== 'none') setBgEnabled(true);
                   }}
                   className={`flex flex-col items-center justify-center gap-1.5 p-3 rounded-2xl border text-center transition-all ${bgType === opt.id
-                      ? 'border-[var(--gold-bg)] bg-[var(--input-bg)] text-[var(--gold-text)]'
-                      : 'border-[var(--border-color)] bg-[var(--input-bg)]/60 text-[var(--text-muted)] hover:border-[var(--gold-border)] hover:text-[var(--foreground)]'
+                    ? 'border-[var(--gold-bg)] bg-[var(--input-bg)] text-[var(--gold-text)]'
+                    : 'border-[var(--border-color)] bg-[var(--input-bg)]/60 text-[var(--text-muted)] hover:border-[var(--gold-border)] hover:text-[var(--foreground)]'
                     }`}
                 >
                   {opt.icon}
@@ -182,7 +182,7 @@ export default function SettingsPage() {
           {/* Busy Week Mode */}
           <div className="settings-option-row" style={{ paddingTop: 0 }}>
             <div className="settings-option-info">
-              <h3 className="settings-option-title">Busy Week Mode (Alex's Scenario)</h3>
+              <h3 className="settings-option-title">Busy Week Mode</h3>
               <p className="settings-option-desc">Mutes non-essential notifications during exams. Reallocates tasks dynamically.</p>
             </div>
             <Toggle
@@ -197,7 +197,7 @@ export default function SettingsPage() {
           {/* Colorblind options */}
           <div className="settings-option-row">
             <div className="settings-option-info">
-              <h3 className="settings-option-title">Colorblind Filters (Req 10)</h3>
+              <h3 className="settings-option-title">Colorblind Filters</h3>
               <p className="settings-option-desc">Modifies highlight overlays and adds explicit symbols/icons to indicators to support colorblind conditions.</p>
             </div>
             <div className="bg-[var(--input-bg)] border border-[var(--border-color)] px-3 py-2 rounded-xl shrink-0 theme-transition-bg">
