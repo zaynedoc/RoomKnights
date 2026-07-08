@@ -55,8 +55,8 @@ export default function SuppliesPage() {
                 setEditSuppliesMode(!editSuppliesMode);
               }}
               className={`text-xs px-3.5 py-1.5 rounded-xl border flex items-center gap-1 transition-all ${editSuppliesMode
-                  ? 'bg-amber-400 text-black border-amber-500 font-bold'
-                  : 'bg-[var(--input-bg)] text-[var(--text-muted)] border border-[var(--border-color)] theme-transition-bg'
+                ? 'bg-amber-400 text-black border-amber-500 font-bold'
+                : 'btn-primary-gold'
                 }`}
               title="Edit / Delete supply list"
             >
@@ -90,13 +90,39 @@ export default function SuppliesPage() {
                   className="p-3.5 rounded-2xl bg-[var(--card-bg)]/40 border border-[var(--border-color)]/60 flex items-center justify-between gap-3 theme-transition-bg"
                 >
                   {editSuppliesMode ? (
-                    <div className="flex items-center gap-2.5 w-full">
+                    <div className="flex items-center gap-2.5 w-full flex-wrap sm:flex-nowrap">
                       <input
                         type="text"
                         value={supply.name}
                         onChange={(e) => handleRenameSupply(supply.id, e.target.value)}
-                        className="flex-1 bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl px-3 py-1.5 text-xs text-[var(--foreground)] theme-transition-bg focus:outline-none focus:border-amber-400"
+                        className="flex-1 bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl px-3 py-1.5 text-xs text-[var(--foreground)] theme-transition-bg focus:outline-none focus:border-amber-400 min-w-[120px]"
                       />
+
+                      <div className="flex items-center gap-1.5 bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl px-2 py-1 text-xs shrink-0 theme-transition-bg">
+                        <span className="text-[10px] text-[var(--text-muted)] font-semibold uppercase">Buyer:</span>
+                        <select
+                          value={supply.assignedBuyer || ""}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setSupplies(prev => prev.map(s => {
+                              if (s.id === supply.id) {
+                                return { ...s, assignedBuyer: val || null };
+                              }
+                              return s;
+                            }));
+                            const buyerName = val ? roommates.find(r => r.id === val)?.name : 'Unassigned';
+                            addAuditLog('supply', `Supply assignee updated: "${supply.name}" buyer assigned to ${buyerName}`);
+                            triggerFeedback('Supply buyer updated', 'info');
+                          }}
+                          className="bg-transparent text-[11px] font-bold text-[var(--foreground)] focus:outline-none cursor-pointer"
+                        >
+                          <option value="" className="bg-[var(--card-bg)] text-[var(--foreground)]">Unassigned</option>
+                          {roommates.map(rm => (
+                            <option key={rm.id} value={rm.id} className="bg-[var(--card-bg)] text-[var(--foreground)]">{rm.name.split(' ')[0]}</option>
+                          ))}
+                        </select>
+                      </div>
+
                       <button
                         type="button"
                         onClick={() => handleRemoveSupply(supply.id)}
@@ -114,10 +140,10 @@ export default function SuppliesPage() {
                           <button
                             onClick={() => handleReportLowSupply(supply.id)}
                             className={`text-[8px] px-2 py-0.5 rounded font-mono uppercase font-bold border ${supply.status === 'stocked'
-                                ? 'bg-[var(--input-bg)] text-[var(--foreground)] border-[var(--border-color)] theme-transition-bg'
-                                : supply.status === 'low'
-                                  ? 'bg-amber-950/30 text-amber-400 border-amber-500/20'
-                                  : 'bg-rose-950/30 text-rose-400 border-rose-500/20 animate-pulse'
+                              ? 'bg-[var(--input-bg)] text-[var(--foreground)] border-[var(--border-color)] theme-transition-bg'
+                              : supply.status === 'low'
+                                ? 'bg-amber-950/30 text-amber-400 border-amber-500/20'
+                                : 'bg-rose-950/30 text-rose-400 border-rose-500/20 animate-pulse'
                               }`}
                           >
                             {supply.status}

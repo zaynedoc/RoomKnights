@@ -3,11 +3,12 @@
 import React from 'react';
 import { useApp, RecurringChore } from '../../../context/AppContext';
 import { InfoTooltip } from '../../../components/InfoTooltip';
-import { Check } from 'lucide-react';
+import { Check, Edit3 } from 'lucide-react';
 
 export default function ChoresPage() {
   const {
     chores,
+    setChores,
     choreFilter,
     setChoreFilter,
     activeChoreDetails,
@@ -23,10 +24,14 @@ export default function ChoresPage() {
     triggerFeedback
   } = useApp();
 
+  const [editTemplatesMode, setEditTemplatesMode] = React.useState(false);
+  // Map of rec.id -> {title, assignedTo, points, daysInterval} for all cards
+  const [templateDrafts, setTemplateDrafts] = React.useState<Record<string, { title: string; assignedTo: string; points: number; daysInterval: number }>>({});
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fadeIn">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fadeIn">
       {/* Left Column: Tasks & Duties List */}
-      <div className="lg:col-span-2 space-y-4">
+      <div className="space-y-4">
         <div className="flex items-center justify-between gap-4">
           <h2 className="font-extrabold text-sm text-[var(--foreground)] uppercase tracking-wider flex items-center">
             Active Chores & Duties
@@ -177,16 +182,123 @@ export default function ChoresPage() {
 
       {/* Right Column: Recurring Chore Templates */}
       <div className="space-y-4">
-        <h2 className="font-extrabold text-sm text-[var(--foreground)] uppercase tracking-wider flex items-center">
-          Recurring Chore Templates
-          <InfoTooltip text="Templates that automatically schedule recurring household chores on custom intervals or weekdays." direction="down" />
-        </h2>
+        <div className="flex items-center justify-between gap-4">
+          <h2 className="font-extrabold text-sm text-[var(--foreground)] uppercase tracking-wider flex items-center">
+            Recurring Chores
+            <InfoTooltip text="Templates that automatically schedule recurring household chores on custom intervals or weekdays." direction="down" />
+          </h2>
+          <button
+            type="button"
+            onClick={() => {
+              if (!editTemplatesMode) {
+                // Entering edit mode — seed drafts from current template values
+                const seeds: Record<string, { title: string; assignedTo: string; points: number; daysInterval: number }> = {};
+                recurringChores.forEach(rec => {
+                  seeds[rec.id] = {
+                    title: rec.title,
+                    assignedTo: rec.assignedTo || '',
+                    points: rec.points,
+                    daysInterval: rec.daysInterval || 7
+                  };
+                });
+                setTemplateDrafts(seeds);
+              } else {
+                setTemplateDrafts({});
+              }
+              setEditTemplatesMode(!editTemplatesMode);
+            }}
+            className={`text-xs px-3.5 py-1.5 rounded-xl border flex items-center gap-1 transition-all ${editTemplatesMode
+              ? 'bg-amber-400 text-black border-amber-500 font-bold'
+              : 'btn-primary-gold'
+              }`}
+          >
+            <Edit3 size={12} />
+            {editTemplatesMode ? 'Done' : 'Edit Templates'}
+          </button>
+        </div>
 
         <div className="bg-[var(--card-bg)] border border-[var(--border-color)] p-5 rounded-3xl space-y-4 theme-transition-bg">
 
           <div className="space-y-3.5">
             {recurringChores.map((rec) => {
               const assignee = roommates.find(r => r.id === rec.assignedTo);
+
+              if (editTemplatesMode) {
+                const draft = templateDrafts[rec.id] || { title: rec.title, assignedTo: rec.assignedTo || '', points: rec.points, daysInterval: rec.daysInterval || 7 };
+                const setDraft = (patch: Partial<typeof draft>) =>
+                  setTemplateDrafts(prev => ({ ...prev, [rec.id]: { ...draft, ...patch } }));
+
+                return (
+                  <div key={rec.id} className="p-3.5 bg-[var(--input-bg)] border border-amber-400/40 rounded-2xl flex flex-col gap-2 theme-transition-bg">
+                    <div className="space-y-2">
+                      <input
+                        type="text"
+                        value={draft.title}
+                        onChange={(e) => setDraft({ title: e.target.value })}
+                        placeholder="Chore title..."
+                        className="w-full bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg px-2 py-1.5 text-xs text-[var(--foreground)] focus:outline-none focus:border-amber-400"
+                      />
+                      <div className="grid grid-cols-2 gap-2">
+                        <select
+                          value={draft.assignedTo}
+                          onChange={(e) => setDraft({ assignedTo: e.target.value })}
+                          className="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg px-2 py-1 text-xs text-[var(--foreground)] cursor-pointer"
+                        >
+                          <option value="">Pool (Unassigned)</option>
+                          {roommates.map(rm => (
+                            <option key={rm.id} value={rm.id}>{rm.name.split(' ')[0]}</option>
+                          ))}
+                        </select>
+                        <input
+                          type="number"
+                          value={draft.points}
+                          onChange={(e) => setDraft({ points: parseInt(e.target.value) || 0 })}
+                          placeholder="Points..."
+                          className="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg px-2 py-1 text-xs text-[var(--foreground)]"
+                        />
+                      </div>
+                      <div className="flex items-center justify-between gap-1.5">
+                        <div className="flex items-center gap-1">
+                          <span className="text-[9px] text-[var(--text-muted)] font-semibold">Every:</span>
+                          <input
+                            type="number"
+                            value={draft.daysInterval}
+                            onChange={(e) => setDraft({ daysInterval: parseInt(e.target.value) || 7 })}
+                            className="w-12 bg-[var(--card-bg)] border border-[var(--border-color)] rounded px-1 py-0.5 text-[9px] text-center text-[var(--foreground)] font-bold"
+                          />
+                          <span className="text-[9px] text-[var(--text-muted)] font-semibold">days</span>
+                        </div>
+                        <button
+                          onClick={() => {
+                            if (!draft.title.trim()) {
+                              triggerFeedback('Chore name cannot be empty', 'alert');
+                              return;
+                            }
+                            // Update template
+                            setRecurringChores(prev => prev.map(t =>
+                              t.id === rec.id
+                                ? { ...t, title: draft.title, assignedTo: draft.assignedTo || null, points: draft.points, daysInterval: draft.daysInterval }
+                                : t
+                            ));
+                            // Propagate to matching active chores
+                            setChores(prev => prev.map(c =>
+                              (!c.completed && c.title === rec.title)
+                                ? { ...c, title: draft.title, assignedTo: draft.assignedTo || null, points: draft.points }
+                                : c
+                            ));
+                            addAuditLog('chore', `Recurring template "${rec.title}" updated to "${draft.title}" [${draft.points} pts]`);
+                            triggerFeedback(`"${draft.title}" updated!`, 'success');
+                          }}
+                          className="text-[9px] px-3.5 py-1 rounded font-bold btn-primary-gold"
+                        >
+                          Apply
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+
               return (
                 <div key={rec.id} className="p-3.5 bg-[var(--input-bg)]/60 border border-[var(--border-color)]/60 rounded-2xl flex flex-col gap-2 theme-transition-bg">
                   <div className="flex items-center justify-between gap-2">

@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "RoomKnights - UCF Roommate Management",
+  title: "RoomKnights",
   description: "High-fidelity roommate coordination prototype for CAP 3104",
 };
 

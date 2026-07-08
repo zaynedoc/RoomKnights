@@ -29,10 +29,10 @@ export default function SettingsPage() {
 
       <div className="space-y-4 divide-y divide-[var(--border-color)]">
         {/* Setting 1: Busy Week Mode */}
-        <div className="pt-4 first:pt-0 flex items-start justify-between gap-4">
-          <div className="max-w-md">
-            <h3 className="text-xs font-bold text-[var(--foreground)]">Busy Week Mode (Alex's Scenario)</h3>
-            <p className="text-[10px] text-[var(--text-muted)] mt-1">
+        <div className="settings-option-row">
+          <div className="settings-option-info">
+            <h3 className="settings-option-title">Busy Week Mode (Alex's Scenario)</h3>
+            <p className="settings-option-desc">
               Mutes non-essential notifications during exams. Reallocates tasks dynamically.
             </p>
           </div>
@@ -50,10 +50,10 @@ export default function SettingsPage() {
         </div>
 
         {/* Setting 2: Colorblind options */}
-        <div className="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="max-w-md">
-            <h3 className="text-xs font-bold text-[var(--foreground)]">Colorblind Filters (Req 10)</h3>
-            <p className="text-[10px] text-[var(--text-muted)] mt-1">
+        <div className="settings-option-row">
+          <div className="settings-option-info">
+            <h3 className="settings-option-title">Colorblind Filters (Req 10)</h3>
+            <p className="settings-option-desc">
               Modifies highlight overlays and adds explicit symbols/icons to indicators to support colorblind conditions.
             </p>
           </div>
@@ -76,10 +76,10 @@ export default function SettingsPage() {
         </div>
 
         {/* Setting 3: Audio Feedbacks */}
-        <div className="pt-4 flex items-start justify-between gap-4">
-          <div className="max-w-md">
-            <h3 className="text-xs font-bold text-[var(--foreground)]">Oscillating Tone Feedback</h3>
-            <p className="text-[10px] text-[var(--text-muted)] mt-1">
+        <div className="settings-option-row">
+          <div className="settings-option-info">
+            <h3 className="settings-option-title">Oscillating Tone Feedback</h3>
+            <p className="settings-option-desc">
               Plays responsive audio signals representing completed/warning states for multimodal accessibility.
             </p>
           </div>
@@ -96,10 +96,10 @@ export default function SettingsPage() {
         </div>
 
         {/* Setting 4: Theme Mode */}
-        <div className="pt-4 flex items-start justify-between gap-4">
-          <div className="max-w-md">
-            <h3 className="text-xs font-bold text-[var(--foreground)]">Theme Mode (Light / Dark)</h3>
-            <p className="text-[10px] text-[var(--text-muted)] mt-1">
+        <div className="settings-option-row">
+          <div className="settings-option-info">
+            <h3 className="settings-option-title">Theme Mode (Light / Dark)</h3>
+            <p className="settings-option-desc">
               Transitions background and layout colors smoothly over 700ms. Adjust "--theme-transition-speed" in app/globals.css to fine-tune.
             </p>
           </div>
