@@ -152,6 +152,14 @@ body {
     box-shadow var(--theme-transition-speed) ease-in-out;
 }
 
+/* Global input/select focus — override browser blue ring with accent border */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  border-color: var(--gold-text) !important;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

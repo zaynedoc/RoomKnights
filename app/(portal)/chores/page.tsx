@@ -259,7 +259,7 @@ export default function ChoresPage() {
                           value={draft.points}
                           onChange={(e) => setDraft({ points: parseInt(e.target.value) || 0 })}
                           placeholder="Points..."
-                          className="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg px-2 py-1 text-xs text-[var(--foreground)]"
+                          className="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg px-2 py-1 text-xs text-[var(--foreground)] focus:outline-none focus:border-[var(--gold-text)] transition-colors"
                         />
                       </div>
                       <div className="flex items-center justify-between gap-1.5">
@@ -269,7 +269,7 @@ export default function ChoresPage() {
                             type="number"
                             value={draft.daysInterval}
                             onChange={(e) => setDraft({ daysInterval: parseInt(e.target.value) || 7 })}
-                            className="w-12 bg-[var(--card-bg)] border border-[var(--border-color)] rounded px-1 py-0.5 text-[9px] text-center text-[var(--foreground)] font-bold"
+                            className="w-12 bg-[var(--card-bg)] border border-[var(--border-color)] rounded px-1 py-0.5 text-[9px] text-center text-[var(--foreground)] font-bold focus:outline-none focus:border-[var(--gold-text)] transition-colors"
                           />
                           <span className="text-[9px] text-[var(--text-muted)] font-semibold">days</span>
                         </div>
@@ -362,7 +362,7 @@ export default function ChoresPage() {
                   type="number"
                   id="new-rec-points"
                   placeholder="Points (e.g. 15)"
-                  className="bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl px-2.5 py-2 text-xs text-[var(--foreground)] theme-transition-bg"
+                  className="bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl px-2.5 py-2 text-xs text-[var(--foreground)] theme-transition-bg focus:outline-none focus:border-[var(--gold-text)] transition-colors"
                 />
               </div>
 
