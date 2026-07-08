@@ -1,8 +1,26 @@
 @import "tailwindcss";
 
 :root {
+  /* Manual Transition Speed Fine-tuning */
+  --theme-transition-speed: 300ms;
+
+  /* Theme color palettes */
   --background: #0d0d0f;
   --foreground: #ededed;
+  --card-bg: #111115;
+  --border-color: #26262b;
+  --text-muted: #a1a1aa;
+  --input-bg: #16161c;
+}
+
+/* Light theme values matching your portfolio layout */
+.theme-light {
+  --background: #fbfbfb;
+  --foreground: #09090b;
+  --card-bg: #f4f4f5;
+  --border-color: #e4e4e7;
+  --text-muted: #71717a;
+  --input-bg: #ffffff;
 }
 
 @theme inline {
@@ -18,6 +36,17 @@ body {
   font-family: var(--font-sans), sans-serif;
 }
 
+/* 
+  Gradual transition ONLY applied to backgrounds, borders, and general text colors during theme switches.
+  Epileptic users are not affected by small UI components, so small buttons/indicators remain fast.
+*/
+.theme-transition-bg {
+  transition: background-color var(--theme-transition-speed) ease-in-out,
+    border-color var(--theme-transition-speed) ease-in-out,
+    color var(--theme-transition-speed) ease-in-out,
+    box-shadow var(--theme-transition-speed) ease-in-out;
+}
+
 /* Custom Scrollbar for modern feel */
 ::-webkit-scrollbar {
   width: 6px;
@@ -25,16 +54,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0d0d0f;
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #222226;
+  background: var(--border-color);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #333339;
+  background: var(--text-muted);
 }
 
 /* Smooth fade-in animation for tab transitions */
@@ -43,6 +72,7 @@ body {
     opacity: 0;
     transform: translateY(4px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
