@@ -90,11 +90,13 @@ export default function ChoresPage() {
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${chore.completed
-                        ? 'bg-amber-400 border-amber-400 text-black'
+                        ? 'text-black'
                         : chore.missed
                           ? 'border-rose-500'
                           : 'border-neutral-600'
-                        }`}>
+                        }`}
+                        style={chore.completed ? { backgroundColor: 'var(--gold-bg)', borderColor: 'var(--gold-bg)' } : undefined}
+                      >
                         {chore.completed && <Check size={10} strokeWidth={4} />}
                       </div>
                       <div className="min-w-0">
@@ -109,7 +111,7 @@ export default function ChoresPage() {
 
                     <div className="flex items-center gap-2.5 shrink-0">
                       {/* Points badge */}
-                      <span className="text-[9px] font-mono font-bold bg-[var(--input-bg)] border border-[var(--border-color)] px-2.5 py-0.5 rounded-full text-amber-400 theme-transition-bg">
+                      <span className="pts-badge theme-transition-bg">
                         {chore.points} pts
                       </span>
 
@@ -145,8 +147,10 @@ export default function ChoresPage() {
                               onClick={() => handleToggleSubtask(chore.id, idx)}
                               className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-[var(--input-bg)]/80 cursor-pointer transition-colors"
                             >
-                              <div className={`w-3.5 h-3.5 rounded border flex items-center justify-center shrink-0 ${sub.done ? 'bg-amber-400 border-amber-400 text-black' : 'border-neutral-600'
-                                }`}>
+                              <div
+                                className={`w-3.5 h-3.5 rounded border flex items-center justify-center shrink-0 ${sub.done ? 'text-black' : 'border-neutral-600'}`}
+                                style={sub.done ? { backgroundColor: 'var(--gold-bg)', borderColor: 'var(--gold-bg)' } : undefined}
+                              >
                                 {sub.done && <Check size={8} strokeWidth={4} />}
                               </div>
                               <span className={`text-xs ${sub.done ? 'line-through text-[var(--text-muted)]' : 'text-[var(--foreground)]'}`}>
@@ -208,9 +212,10 @@ export default function ChoresPage() {
               setEditTemplatesMode(!editTemplatesMode);
             }}
             className={`text-xs px-3.5 py-1.5 rounded-xl border flex items-center gap-1 transition-all ${editTemplatesMode
-              ? 'bg-amber-400 text-black border-amber-500 font-bold'
+              ? 'text-black font-bold'
               : 'btn-primary-gold'
               }`}
+            style={editTemplatesMode ? { backgroundColor: 'var(--gold-bg)', borderColor: 'var(--gold-hover)' } : undefined}
           >
             <Edit3 size={12} />
             {editTemplatesMode ? 'Done' : 'Edit Templates'}
@@ -303,7 +308,7 @@ export default function ChoresPage() {
                 <div key={rec.id} className="p-3.5 bg-[var(--input-bg)]/60 border border-[var(--border-color)]/60 rounded-2xl flex flex-col gap-2 theme-transition-bg">
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-xs font-bold text-[var(--foreground)]">{rec.title}</span>
-                    <span className="text-[9px] font-mono font-bold bg-[var(--card-bg)] px-2 py-0.5 border border-[var(--border-color)] rounded-full text-amber-400 shrink-0">
+                    <span className="pts-badge">
                       {rec.points} pts
                     </span>
                   </div>

@@ -88,6 +88,16 @@ interface AppContextType {
   notificationsOpen: boolean;
   setNotificationsOpen: (open: boolean) => void;
 
+  // Appearance customization
+  accentColor: string;
+  setAccentColor: (hex: string) => void;
+  bgType: 'none' | 'beams' | 'grid' | 'glow' | 'dots';
+  setBgType: (t: 'none' | 'beams' | 'grid' | 'glow' | 'dots') => void;
+  bgEnabled: boolean;
+  setBgEnabled: (v: boolean) => void;
+  bgSpeed: number;
+  setBgSpeed: (n: number) => void;
+
   roommates: Roommate[];
   setRoommates: React.Dispatch<React.SetStateAction<Roommate[]>>;
   chores: Chore[];
@@ -159,6 +169,12 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [busyWeekMode, setBusyWeekMode] = useState<boolean>(false);
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const [notificationsOpen, setNotificationsOpen] = useState<boolean>(false);
+
+  // Appearance
+  const [accentColor, setAccentColor] = useState<string>('#fbbf24');
+  const [bgType, setBgType] = useState<'none' | 'beams' | 'grid' | 'glow' | 'dots'>('none');
+  const [bgEnabled, setBgEnabled] = useState<boolean>(false);
+  const [bgSpeed, setBgSpeed] = useState<number>(1);
 
   const [roommates, setRoommates] = useState<Roommate[]>([]);
   const [chores, setChores] = useState<Chore[]>([]);
@@ -341,6 +357,10 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     const storedTheme = localStorage.getItem('rk_theme_v2');
     const storedBusyMode = localStorage.getItem('rk_busy_mode_v2');
     const storedUser = localStorage.getItem('rk_active_user_v2');
+    const storedAccent = localStorage.getItem('rk_accent_v2');
+    const storedBgType = localStorage.getItem('rk_bg_type_v2');
+    const storedBgEnabled = localStorage.getItem('rk_bg_enabled_v2');
+    const storedBgSpeed = localStorage.getItem('rk_bg_speed_v2');
 
     if (storedRoommates) setRoommates(JSON.parse(storedRoommates));
     else setRoommates(defaultRoommates);
@@ -367,6 +387,10 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     if (storedTheme) setThemeMode(storedTheme as any);
     if (storedBusyMode) setBusyWeekMode(JSON.parse(storedBusyMode));
     if (storedUser) setActiveUserId(storedUser);
+    if (storedAccent) setAccentColor(storedAccent);
+    if (storedBgType) setBgType(storedBgType as any);
+    if (storedBgEnabled) setBgEnabled(JSON.parse(storedBgEnabled));
+    if (storedBgSpeed) setBgSpeed(JSON.parse(storedBgSpeed));
   }, []);
 
   // Save changes to localStorage
@@ -425,6 +449,36 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     if (activeUserId) localStorage.setItem('rk_active_user_v2', activeUserId);
     else localStorage.removeItem('rk_active_user_v2');
   }, [activeUserId, mounted]);
+
+  // Appearance persistence
+  useEffect(() => {
+    if (!mounted) return;
+    localStorage.setItem('rk_accent_v2', accentColor);
+    // Apply to CSS immediately
+    document.documentElement.style.setProperty('--accent', accentColor);
+  }, [accentColor, mounted]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    localStorage.setItem('rk_bg_type_v2', bgType);
+  }, [bgType, mounted]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    localStorage.setItem('rk_bg_enabled_v2', JSON.stringify(bgEnabled));
+  }, [bgEnabled, mounted]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    localStorage.setItem('rk_bg_speed_v2', JSON.stringify(bgSpeed));
+  }, [bgSpeed, mounted]);
+
+  // Apply accent color from storage on initial mount
+  useEffect(() => {
+    if (mounted) {
+      document.documentElement.style.setProperty('--accent', accentColor);
+    }
+  }, [mounted]);
 
   // Clear feedback notification timer
   useEffect(() => {
@@ -750,6 +804,15 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         setSoundEnabled,
         notificationsOpen,
         setNotificationsOpen,
+
+        accentColor,
+        setAccentColor,
+        bgType,
+        setBgType,
+        bgEnabled,
+        setBgEnabled,
+        bgSpeed,
+        setBgSpeed,
 
         roommates,
         setRoommates,

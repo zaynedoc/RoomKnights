@@ -36,7 +36,7 @@ export default function LoginPage() {
       <div className="max-w-md w-full bg-[var(--card-bg)] border border-[var(--border-color)] p-8 rounded-3xl relative z-10 shadow-2xl space-y-6 theme-transition-bg">
         <div className="text-center space-y-2">
           <h1 className="text-3xl font-black tracking-wider text-[var(--foreground)]">
-            ROOM<span className="text-amber-400">KNIGHTS</span>
+            ROOM<span style={{ color: 'var(--gold-text)' }}>KNIGHTS</span>
           </h1>
           <p className="text-xs text-[var(--text-muted)] max-w-xs mx-auto">
             UCF Roommate Portal for Chores, Joint Purchases, and Task Accountability.
@@ -60,7 +60,7 @@ export default function LoginPage() {
                     {rm.initials}
                   </div>
                   <div>
-                    <h3 className="text-xs font-bold text-[var(--foreground)] group-hover:text-amber-400 transition-colors">
+                    <h3 className="text-xs font-bold text-[var(--foreground)] group-hover:accent-text transition-colors">
                       {rm.name}
                     </h3>
                     <span className="text-[10px] text-[var(--text-muted)] block mt-0.5">
@@ -68,7 +68,7 @@ export default function LoginPage() {
                     </span>
                   </div>
                 </div>
-                <UserCheck size={16} className="text-neutral-600 group-hover:text-amber-400 transition-colors" />
+                <UserCheck size={16} className="text-neutral-600 group-hover:accent-text transition-colors" />
               </button>
             ))}
           </div>
@@ -78,7 +78,7 @@ export default function LoginPage() {
           <span className="text-[10px] text-[var(--text-muted)]">CAP 3104 Project Simulation</span>
           <button
             onClick={handleResetData}
-            className="text-[10px] text-[var(--text-muted)] hover:text-amber-400 flex items-center gap-1 transition-colors"
+            className="text-[10px] text-[var(--text-muted)] hover:accent-text flex items-center gap-1 transition-colors"
           >
             <RefreshCw size={10} /> Reset Data State
           </button>

@@ -8,6 +8,7 @@ import { Edit3, Plus, Trash2, DollarSign } from 'lucide-react';
 export default function SuppliesPage() {
   const {
     supplies,
+    setSupplies,
     editSuppliesMode,
     setEditSuppliesMode,
     newSupplyName,
@@ -34,7 +35,8 @@ export default function SuppliesPage() {
     handleAutoAssignBuyer,
     handleAddExpense,
     handleSettleBalances,
-    triggerFeedback
+    triggerFeedback,
+    addAuditLog
   } = useApp();
 
   return (
@@ -55,9 +57,10 @@ export default function SuppliesPage() {
                 setEditSuppliesMode(!editSuppliesMode);
               }}
               className={`text-xs px-3.5 py-1.5 rounded-xl border flex items-center gap-1 transition-all ${editSuppliesMode
-                ? 'bg-amber-400 text-black border-amber-500 font-bold'
+                ? 'text-black font-bold'
                 : 'btn-primary-gold'
                 }`}
+              style={editSuppliesMode ? { backgroundColor: 'var(--gold-bg)', borderColor: 'var(--gold-hover)' } : undefined}
               title="Edit / Delete supply list"
             >
               <Edit3 size={12} /> {editSuppliesMode ? 'Done' : 'Edit List'}
@@ -141,9 +144,9 @@ export default function SuppliesPage() {
                             onClick={() => handleReportLowSupply(supply.id)}
                             className={`text-[8px] px-2 py-0.5 rounded font-mono uppercase font-bold border ${supply.status === 'stocked'
                               ? 'bg-[var(--input-bg)] text-[var(--foreground)] border-[var(--border-color)] theme-transition-bg'
-                              : supply.status === 'low'
-                                ? 'bg-amber-950/30 text-amber-400 border-amber-500/20'
-                                : 'bg-rose-950/30 text-rose-400 border-rose-500/20 animate-pulse'
+                                : supply.status === 'low'
+                                  ? 'bg-amber-950/30 accent-text border-amber-500/20'
+                                  : 'bg-rose-950/30 text-rose-400 border-rose-500/20 animate-pulse'
                               }`}
                           >
                             {supply.status}
