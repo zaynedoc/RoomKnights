@@ -1,0 +1,375 @@
+@import "tailwindcss";
+
+:root {
+  /* Manual Transition Speed Fine-tuning */
+  --theme-transition-speed: 300ms;
+
+  /* Theme color palettes */
+  --background: #0d0d0f;
+  --foreground: #ededed;
+  --card-bg: #111115;
+  --border-color: #26262b;
+  --text-muted: #a1a1aa;
+  --input-bg: #16161c;
+
+  /* Gold values */
+  --gold-bg: #fbbf24;
+  --gold-hover: #f59e0b;
+  --gold-border: rgba(245, 158, 11, 0.25);
+  --gold-text: #fbbf24;
+
+  /* Badge colors */
+  --badge-success-bg: rgba(251, 191, 36, 0.08);
+  --badge-success-text: #fbbf24;
+  --badge-success-border: rgba(251, 191, 36, 0.15);
+
+  --badge-alert-bg: rgba(244, 63, 94, 0.08);
+  --badge-alert-text: #fb7185;
+  --badge-alert-border: rgba(244, 63, 94, 0.15);
+
+  --shadow-glow: rgba(245, 158, 11, 0.06);
+}
+
+/* Light theme values matching UCF portfolio layout */
+.theme-light {
+  --background: #fbfbfb;
+  --foreground: #09090b;
+  --card-bg: #f4f4f5;
+  --border-color: #e4e4e7;
+  --text-muted: #71717a;
+  --input-bg: #ffffff;
+
+  --gold-bg: #f59e0b;
+  --gold-hover: #d97706;
+  --gold-border: rgba(217, 119, 6, 0.25);
+  --gold-text: #d97706;
+
+  --badge-success-bg: rgba(217, 119, 6, 0.08);
+  --badge-success-text: #d97706;
+  --badge-success-border: rgba(217, 119, 6, 0.15);
+
+  --badge-alert-bg: rgba(225, 29, 72, 0.08);
+  --badge-alert-text: #e11d48;
+  --badge-alert-border: rgba(225, 29, 72, 0.15);
+
+  --shadow-glow: rgba(217, 119, 6, 0.04);
+}
+
+/* Accessibility colorblind modes */
+.deuteranopia,
+.protanopia {
+  --gold-bg: #eab308;
+  --gold-hover: #ca8a04;
+  --gold-border: rgba(234, 179, 8, 0.25);
+  --gold-text: #facc15;
+
+  --badge-success-bg: #27272a;
+  --badge-success-text: #fde047;
+  --badge-success-border: #3f3f46;
+
+  --badge-alert-bg: #18181b;
+  --badge-alert-text: #a1a1aa;
+  --badge-alert-border: #27272a;
+}
+
+.tritanopia {
+  --gold-bg: #fbbf24;
+  --gold-hover: #f59e0b;
+  --gold-border: rgba(245, 158, 11, 0.25);
+  --gold-text: #fbbf24;
+
+  --badge-success-bg: rgba(16, 185, 129, 0.1);
+  --badge-success-text: #34d399;
+  --badge-success-border: rgba(16, 185, 129, 0.2);
+
+  --badge-alert-bg: rgba(244, 63, 94, 0.1);
+  --badge-alert-text: #fb7185;
+  --badge-alert-border: rgba(244, 63, 94, 0.2);
+}
+
+.high-contrast {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card-bg: #000000;
+  --border-color: #ffffff;
+  --input-bg: #000000;
+
+  --gold-bg: #ffffff;
+  --gold-hover: #e5e5e5;
+  --gold-border: #ffffff;
+  --gold-text: #ffffff;
+
+  --badge-success-bg: #000000;
+  --badge-success-text: #ffffff;
+  --badge-success-border: #ffffff;
+
+  --badge-alert-bg: #000000;
+  --badge-alert-text: #ffffff;
+  --badge-alert-border: #ffffff;
+
+  --shadow-glow: transparent;
+}
+
+.high-contrast.theme-light {
+  --background: #ffffff;
+  --foreground: #000000;
+  --card-bg: #ffffff;
+  --border-color: #000000;
+  --input-bg: #ffffff;
+
+  --gold-bg: #000000;
+  --gold-hover: #1a1a1a;
+  --gold-border: #000000;
+  --gold-text: #000000;
+
+  --badge-success-bg: #ffffff;
+  --badge-success-text: #000000;
+  --badge-success-border: #000000;
+
+  --badge-alert-bg: #ffffff;
+  --badge-alert-text: #000000;
+  --badge-alert-border: #000000;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+}
+
+/* Transition utility */
+.theme-transition-bg {
+  transition: background-color var(--theme-transition-speed) ease-in-out,
+    border-color var(--theme-transition-speed) ease-in-out,
+    color var(--theme-transition-speed) ease-in-out,
+    box-shadow var(--theme-transition-speed) ease-in-out;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Semantic Layout & Component Styles (Vanilla CSS External) */
+.app-layout {
+  min-height: 100vh;
+  background-color: var(--background);
+  color: var(--foreground);
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: 70rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* Component Classes */
+.card-el {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: 1.25rem;
+  border-radius: 1.5rem;
+  transition: all var(--theme-transition-speed) ease-in-out;
+}
+
+.card-el:hover {
+  box-shadow: 0 0 20px var(--shadow-glow);
+  border-color: var(--gold-border);
+}
+
+.card-padding-lg {
+  padding: 1.5rem;
+  border-radius: 1.875rem;
+}
+
+/* Input Fields */
+.input-text {
+  width: 100%;
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.75rem;
+  color: var(--foreground);
+  outline: none;
+  transition: border-color 0.2s ease-in-out, background-color var(--theme-transition-speed) ease-in-out;
+}
+
+.input-text:focus {
+  border-color: var(--gold-text);
+}
+
+.select-custom {
+  width: 100%;
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.75rem;
+  color: var(--foreground);
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease-in-out, background-color var(--theme-transition-speed) ease-in-out;
+}
+
+.select-custom:focus {
+  border-color: var(--gold-text);
+}
+
+/* Buttons */
+.btn-primary-gold {
+  background-color: var(--gold-bg);
+  border: 1px solid var(--gold-hover);
+  color: #000000;
+  font-weight: 700;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary-gold:hover:not(:disabled) {
+  background-color: var(--gold-hover);
+}
+
+.high-contrast .btn-primary-gold {
+  border: 2px solid #ffffff;
+}
+
+.high-contrast.theme-light .btn-primary-gold {
+  color: #ffffff;
+  border: 2px solid #000000;
+}
+
+/* Badge indicators */
+.badge-gold-text {
+  color: var(--gold-text);
+}
+
+.indicator-badge-success {
+  background-color: var(--badge-success-bg);
+  color: var(--badge-success-text);
+  border: 1px solid var(--badge-success-border);
+}
+
+.indicator-badge-alert {
+  background-color: var(--badge-alert-bg);
+  color: var(--badge-alert-text);
+  border: 1px solid var(--badge-alert-border);
+}
+
+/* Section Card Layout Styles */
+.section-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: 1.25rem;
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: all var(--theme-transition-speed) ease-in-out;
+}
+
+.section-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.section-card-title {
+  font-weight: 800;
+  font-size: 0.875rem;
+  color: var(--foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+}
+
+.points-badge {
+  font-family: var(--font-mono), monospace;
+  font-weight: 700;
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-color);
+  padding: 0.125rem 0.625rem;
+  border-radius: 9999px;
+  color: var(--gold-text);
+  font-size: 0.5625rem;
+  transition: all var(--theme-transition-speed) ease-in-out;
+}
+
+/* Settings and Options Typography Refactoring */
+.settings-option-row {
+  padding-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.settings-option-row:first-of-type {
+  padding-top: 0;
+}
+
+.settings-option-info {
+  max-width: 28rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-option-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.settings-option-desc {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+  line-height: 1.375;
+}
