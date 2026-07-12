@@ -1,14 +1,17 @@
-# RoomKnights
+<p align="center">
+  <img src="public/images/RoomKnights.png" alt="RoomKnights banner" width="100%" />
+</p>
+
+<p align="center">
+  <h1>RoomKnights</h1>
+</p>
+
+![Next.js](https://img.shields.io/badge/Next.js_16-000?logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React_19-61DAFB?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_4-06B6D4?logo=tailwindcss&logoColor=white)
 
 A roommate management portal for coordinating chores, shared expenses, and household accountability. Built as a prototype for a university HCI course (CAP 3104) around a four-person UCF household scenario.
-
-## Tech Stack
-
-- Next.js 16 (App Router)
-- TypeScript
-- Tailwind CSS + Vanilla CSS (external class system)
-- Framer Motion
-- localStorage (client-side persistence)
 
 ## Core Features
 
