@@ -1,8 +1,4 @@
 <p align="center">
-  <img src="public/images/RoomKnights.png" alt="RoomKnights banner" width="100%" />
-</p>
-
-<p align="center">
   <h1>RoomKnights</h1>
 </p>
 
@@ -20,6 +16,10 @@ A roommate management portal for coordinating chores, shared expenses, and house
 - **Accountability** — leaderboard of roommate contributions with audit log and nudge system
 - **Appearance** — user-selectable accent color, animated backgrounds (beams, grid, glow, dots), and light/dark theme; all preferences persisted per session
 - **Accessibility** — colorblind filter modes (deuteranopia, protanopia, tritanopia, high contrast) and audio feedback toggles
+
+<p>
+  <img src="public/og-image.jpg" alt="RoomKnights banner" width="100%" />
+</p>
 
 ## Running Locally
 
