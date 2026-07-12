@@ -208,7 +208,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     {
       id: 'chore-1',
       title: 'Take out Trash & Recycling',
-      assignedTo: 'john',
+      assignedTo: 'alex',
       dueDate: 'Today (Overdue by 2 days)',
       completed: false,
       checklist: [
@@ -217,7 +217,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         { text: 'Take bags to complex dumpster', done: false }
       ],
       missed: true,
-      points: 15,
+      points: 10,
       category: 'Cleaning'
     },
     {
@@ -232,28 +232,28 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         { text: 'Empty vacuum canister', done: false }
       ],
       missed: false,
-      points: 20,
+      points: 15,
       category: 'Cleaning'
     },
     {
       id: 'chore-3',
-      title: 'Wipe Kitchen Counters & Sink',
-      assignedTo: 'alex',
+      title: 'Clean Kitchen & Dishwasher',
+      assignedTo: 'jane',
       dueDate: 'Tomorrow',
       completed: false,
       checklist: [
-        { text: 'Remove dirty dishes', done: false },
-        { text: 'Wipe with disinfectant spray', done: false },
-        { text: 'Clean drain guard', done: false }
+        { text: 'Wipe counters and stovetop', done: false },
+        { text: 'Run or empty dishwasher', done: false },
+        { text: 'Clean sink drain guard', done: false }
       ],
       missed: false,
-      points: 10,
+      points: 20,
       category: 'Kitchen'
     },
     {
       id: 'chore-4',
       title: 'Clean Shared Bathroom Sink & Mirror',
-      assignedTo: null,
+      assignedTo: 'knightro',
       dueDate: 'In 2 Days',
       completed: false,
       checklist: [
@@ -306,9 +306,11 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   ];
 
   const defaultRecurringChores: RecurringChore[] = [
-    { id: 'rec-1', title: 'Vacuum Living Room & Hallway', assignedTo: 'john', frequencyType: 'days', daysInterval: 7, points: 15 },
-    { id: 'rec-2', title: 'Clean Kitchen & Dishwasher', assignedTo: 'jane', frequencyType: 'weekdays', weekdays: ['Mon', 'Wed', 'Fri'], points: 20 },
-    { id: 'rec-3', title: 'Take out Trash & Recycling', assignedTo: 'alex', frequencyType: 'weekdays', weekdays: ['Tue', 'Thu', 'Sat'], points: 10 }
+    { id: 'rec-1', title: 'Take out Trash & Recycling', assignedTo: 'alex', frequencyType: 'weekdays', weekdays: ['Tue', 'Thu', 'Sat'], points: 10 },
+    { id: 'rec-2', title: 'Vacuum Living Room & Hallway', assignedTo: 'john', frequencyType: 'days', daysInterval: 7, points: 15 },
+    { id: 'rec-3', title: 'Clean Kitchen & Dishwasher', assignedTo: 'jane', frequencyType: 'weekdays', weekdays: ['Mon', 'Wed', 'Fri'], points: 20 },
+    { id: 'rec-4', title: 'Clean Shared Bathroom Sink & Mirror', assignedTo: 'knightro', frequencyType: 'days', daysInterval: 7, points: 25 },
+    { id: 'rec-5', title: 'Mop Common Hardwood Floors', assignedTo: 'jane', frequencyType: 'days', daysInterval: 14, points: 30 }
   ];
 
   const triggerFeedback = (text: string, type: 'success' | 'info' | 'alert' = 'success') => {
