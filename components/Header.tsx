@@ -49,6 +49,7 @@ export const Header: React.FC = () => {
   const inactiveTabClass = 'text-[var(--text-muted)] hover:text-[var(--foreground)]';
 
   return (
+    <>
     <header className="sticky top-0 z-30 w-full bg-[var(--background)]/90 backdrop-blur-md border-b border-[var(--border-color)] py-4 px-4 sm:px-6 theme-transition-bg">
       <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
 
@@ -163,25 +164,31 @@ export const Header: React.FC = () => {
           </button>
         </div>
       </div>
-
-      {/* Mobile Nav Bar */}
-      <div className="md:hidden border-t border-[var(--border-color)] bg-[var(--card-bg)] p-2 flex justify-around text-xs font-semibold theme-transition-bg">
-        {[
-          { path: '/dashboard', label: 'Dashboard' },
-          { path: '/chores', label: 'Chores' },
-          { path: '/supplies', label: 'Supplies' },
-          { path: '/accountability', label: 'Accountability' },
-        ].map(({ path, label }) => (
-          <button
-            key={path}
-            onClick={() => navTo(path)}
-            className={`flex-1 py-1.5 rounded-lg text-[10px] font-bold text-center transition-all ${getIsActive(path) ? '' : 'text-[var(--text-muted)]'}`}
-            style={getIsActive(path) ? activeTabStyle : undefined}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
     </header>
+
+    {/* Mobile Bottom Nav Bar — fixed at bottom, only shown on mobile */}
+    <nav
+      className="md:hidden fixed bottom-0 left-0 right-0 z-40 flex justify-around items-center bg-[var(--background)]/95 backdrop-blur-md border-t border-[var(--border-color)] theme-transition-bg"
+      style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 0.75rem)', paddingTop: '0.5rem', paddingLeft: '0.5rem', paddingRight: '0.5rem' }}
+    >
+      {[
+        { path: '/dashboard', label: 'Dashboard' },
+        { path: '/chores', label: 'Chores' },
+        { path: '/supplies', label: 'Supplies' },
+        { path: '/accountability', label: 'Accountability' },
+      ].map(({ path, label }) => (
+        <button
+          key={path}
+          onClick={() => navTo(path)}
+          className={`flex-1 py-1.5 mx-0.5 rounded-lg text-[10px] font-bold text-center transition-all duration-200 ${
+            getIsActive(path) ? '' : 'text-[var(--text-muted)] hover:text-[var(--foreground)]'
+          }`}
+          style={getIsActive(path) ? activeTabStyle : undefined}
+        >
+          {label}
+        </button>
+      ))}
+    </nav>
+    </>
   );
 };

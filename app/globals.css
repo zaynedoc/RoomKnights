@@ -224,6 +224,13 @@ textarea:focus-visible {
   padding-bottom: 2rem;
 }
 
+/* On mobile, add bottom clearance for the fixed bottom nav bar */
+@media (max-width: 767px) {
+  .app-main {
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
 /* Component Classes */
 .card-el {
   background-color: color-mix(in srgb, var(--card-bg) 82%, transparent);
