@@ -3,9 +3,16 @@
 import React from 'react';
 import { useApp, RecurringChore, Chore } from '../../../context/AppContext';
 import { InfoTooltip } from '../../../components/InfoTooltip';
-import { Check, Edit3, Plus, X } from 'lucide-react';
+import { Bell, Check, Edit3, Plus, X } from 'lucide-react';
 
 const WEEKDAY_OPTIONS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+const formatWeekdaySummary = (weekdays: string[]) => {
+  if (weekdays.length === 0) return 'Select one or more days';
+  if (weekdays.length === 1) return `Repeats on ${weekdays[0]}`;
+  if (weekdays.length === 2) return `Repeats on ${weekdays[0]} and ${weekdays[1]}`;
+  return `Repeats on ${weekdays.slice(0, -1).join(', ')}, and ${weekdays[weekdays.length - 1]}`;
+};
 
 export default function ChoresPage() {
   const {
@@ -18,6 +25,7 @@ export default function ChoresPage() {
     roommates,
     activeUserId,
     handleClaimChore,
+    handleNudgeRoommate,
     handleToggleSubtask,
     handleSubmitChore,
     recurringChores,
@@ -44,6 +52,7 @@ export default function ChoresPage() {
   const [newRecFreqType, setNewRecFreqType] = React.useState<'days' | 'weekdays'>('days');
   const [newRecDaysInterval, setNewRecDaysInterval] = React.useState(7);
   const [newRecWeekdays, setNewRecWeekdays] = React.useState<string[]>([]);
+  const [showAddRecurring, setShowAddRecurring] = React.useState(false);
 
   // ── Standalone One-Time Chore Form ──────────────────────────────────────────
   const [showAddChore, setShowAddChore] = React.useState(false);
@@ -101,7 +110,7 @@ export default function ChoresPage() {
 
   const handleAddTemplate = () => {
     if (!newRecTitle.trim()) {
-      triggerFeedback('Please enter a template title', 'alert');
+      triggerFeedback('Please enter a recurring chore title', 'alert');
       return;
     }
     if (newRecFreqType === 'weekdays' && newRecWeekdays.length === 0) {
@@ -138,8 +147,8 @@ export default function ChoresPage() {
     };
     setChores(prev => [...prev, firstChore]);
 
-    addAuditLog('chore', `Recurring template added: "${newRec.title}" [${newRec.points} pts]`);
-    triggerFeedback(`"${newRec.title}" template created!`, 'success');
+    addAuditLog('chore', `Recurring chore added: "${newRec.title}" [${newRec.points} pts]`);
+    triggerFeedback(`"${newRec.title}" recurring chore created!`, 'success');
 
     // Reset
     setNewRecTitle('');
@@ -148,6 +157,7 @@ export default function ChoresPage() {
     setNewRecFreqType('days');
     setNewRecDaysInterval(7);
     setNewRecWeekdays([]);
+    setShowAddRecurring(false);
   };
 
   return (
@@ -155,10 +165,13 @@ export default function ChoresPage() {
       {/* ── Left Column: Active Chores ────────────────────────────────────── */}
       <div className="space-y-4">
         <div className="flex items-start justify-between gap-2">
-          <h2 className="font-extrabold text-sm text-[var(--foreground)] uppercase tracking-wider flex items-center shrink-0">
-            Active Chores &amp; Duties
-            <InfoTooltip text="List of current household chores. Expand to check off tasks, claim pool duties, or track points." direction="down" />
-          </h2>
+          <div className="min-w-0">
+            <h2 className="font-extrabold text-sm text-[var(--foreground)] uppercase tracking-wider flex items-center shrink-0">
+              Single-Use Chores
+              <InfoTooltip text="Tasks that happen once. Expand a card to complete it, claim a pool duty, or track points." direction="down" />
+            </h2>
+            <p className="text-[9px] text-[var(--text-muted)] mt-1">Create and manage one-time household tasks.</p>
+          </div>
 
           <div className="flex items-center gap-1.5 shrink-0">
             {/* Add one-time chore button */}
@@ -168,7 +181,7 @@ export default function ChoresPage() {
               title="Add a one-time chore"
             >
               <Plus size={11} />
-              <span className="hidden xs:inline">One-Time</span>
+              <span>Add Single-Use Chore</span>
             </button>
 
             {/* Filters */}
@@ -266,11 +279,12 @@ export default function ChoresPage() {
               const assignee = roommates.find(r => r.id === chore.assignedTo);
               const isExpanded = activeChoreDetails === chore.id;
               const isOneTime = chore.category === 'One-Time';
+              const canNudge = Boolean(assignee && chore.assignedTo !== activeUserId && !chore.completed);
 
               return (
                 <div
                   key={chore.id}
-                  className={`rounded-2xl border transition-all duration-200 theme-transition-bg ${chore.completed
+                  className={`relative rounded-2xl border transition-all duration-200 theme-transition-bg ${chore.completed
                     ? 'bg-[var(--card-bg)]/30 border-[var(--border-color)]/40 opacity-60'
                     : chore.missed
                       ? 'bg-rose-950/5 border-rose-900/40'
@@ -279,9 +293,27 @@ export default function ChoresPage() {
                         : 'bg-[var(--card-bg)] border-[var(--border-color)] chore-card-hover'
                     }`}
                 >
+                  {canNudge && assignee && (
+                    <button
+                      type="button"
+                      title={`Nudge ${assignee.name.split(' ')[0]} about ${chore.title}`}
+                      aria-label={`Nudge ${assignee.name} about ${chore.title}`}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handleNudgeRoommate(assignee.id, chore.title);
+                      }}
+                      className={`absolute right-3 top-3 z-10 w-7 h-7 rounded-xl border flex items-center justify-center transition-all ${chore.missed
+                        ? 'btn-primary-gold'
+                        : 'bg-[var(--input-bg)] border-[var(--border-color)] text-[var(--text-muted)] hover:text-[var(--foreground)] hover:border-[var(--gold-border)] theme-transition-bg'
+                        }`}
+                    >
+                      <Bell size={12} aria-hidden="true" />
+                    </button>
+                  )}
+
                   <div
                     onClick={() => !chore.completed && setActiveChoreDetails(isExpanded ? null : chore.id)}
-                    className="p-4 flex items-center justify-between gap-3 cursor-pointer"
+                    className={`p-4 flex items-center justify-between gap-3 cursor-pointer ${canNudge ? 'pr-12' : ''}`}
                   >
                     <div className="flex items-center gap-3 min-w-0 flex-1">
                       <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${chore.completed
@@ -387,40 +419,56 @@ export default function ChoresPage() {
       {/* ── Right Column: Recurring Templates ────────────────────────────── */}
       <div className="space-y-4">
         <div className="flex items-center justify-between gap-4">
-          <h2 className="font-extrabold text-sm text-[var(--foreground)] uppercase tracking-wider flex items-center">
-            Recurring Chores
-            <InfoTooltip text="Templates that automatically schedule recurring household chores on custom intervals or weekdays." direction="down" />
-          </h2>
-          <button
-            type="button"
-            onClick={() => {
-              if (!editTemplatesMode) {
-                const seeds: typeof templateDrafts = {};
-                recurringChores.forEach(rec => {
-                  seeds[rec.id] = {
-                    title: rec.title,
-                    assignedTo: rec.assignedTo || '',
-                    points: rec.points,
-                    frequencyType: rec.frequencyType,
-                    daysInterval: rec.daysInterval ?? 7,
-                    weekdays: rec.weekdays ?? [],
-                  };
-                });
-                setTemplateDrafts(seeds);
-              } else {
-                setTemplateDrafts({});
-              }
-              setEditTemplatesMode(!editTemplatesMode);
-            }}
-            className={`text-xs px-3.5 py-1.5 rounded-xl border flex items-center gap-1 transition-all ${editTemplatesMode
-              ? 'text-black font-bold'
-              : 'btn-primary-gold'
-              }`}
-            style={editTemplatesMode ? { backgroundColor: 'var(--gold-bg)', borderColor: 'var(--gold-hover)' } : undefined}
-          >
-            <Edit3 size={12} />
-            {editTemplatesMode ? 'Done' : 'Edit Templates'}
-          </button>
+          <div className="min-w-0">
+            <h2 className="font-extrabold text-sm text-[var(--foreground)] uppercase tracking-wider flex items-center">
+              Recurring Chores
+              <InfoTooltip text="Tasks that repeat on a custom interval or selected weekdays." direction="down" />
+            </h2>
+            <p className="text-[9px] text-[var(--text-muted)] mt-1">Set the schedule once, then let the household repeat it.</p>
+          </div>
+          <div className="flex items-center gap-1.5 shrink-0">
+            <button
+              type="button"
+              onClick={() => setShowAddRecurring(value => !value)}
+              className={`text-[10px] px-2.5 py-1.5 rounded-xl border font-bold flex items-center gap-1 transition-all whitespace-nowrap ${showAddRecurring
+                ? 'bg-[var(--input-bg)] border-[var(--border-color)] text-[var(--foreground)] theme-transition-bg'
+                : 'btn-primary-gold'
+                }`}
+            >
+              <Plus size={11} />
+              {showAddRecurring ? 'Cancel' : 'Add Recurring Chore'}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                if (!editTemplatesMode) {
+                  const seeds: typeof templateDrafts = {};
+                  recurringChores.forEach(rec => {
+                    seeds[rec.id] = {
+                      title: rec.title,
+                      assignedTo: rec.assignedTo || '',
+                      points: rec.points,
+                      frequencyType: rec.frequencyType,
+                      daysInterval: rec.daysInterval ?? 7,
+                      weekdays: rec.weekdays ?? [],
+                    };
+                  });
+                  setTemplateDrafts(seeds);
+                } else {
+                  setTemplateDrafts({});
+                }
+                setEditTemplatesMode(!editTemplatesMode);
+              }}
+              className={`text-xs px-3 py-1.5 rounded-xl border flex items-center gap-1 transition-all ${editTemplatesMode
+                ? 'text-black font-bold'
+                : 'bg-[var(--input-bg)] border-[var(--border-color)] text-[var(--text-muted)] hover:text-[var(--foreground)] theme-transition-bg'
+                }`}
+              style={editTemplatesMode ? { backgroundColor: 'var(--gold-bg)', borderColor: 'var(--gold-hover)' } : undefined}
+              title="Edit recurring chores"
+            >
+              <Edit3 size={12} />
+            </button>
+          </div>
         </div>
 
         <div className="bg-[var(--card-bg)] border border-[var(--border-color)] p-5 rounded-3xl space-y-4 theme-transition-bg">
@@ -517,7 +565,7 @@ export default function ChoresPage() {
                       <button
                         onClick={() => {
                           setRecurringChores(prev => prev.filter(t => t.id !== rec.id));
-                          triggerFeedback(`"${rec.title}" template removed`, 'info');
+                          triggerFeedback(`"${rec.title}" recurring chore removed`, 'info');
                         }}
                         className="text-[9px] text-rose-400 hover:text-rose-300 font-semibold transition-colors"
                       >
@@ -551,7 +599,7 @@ export default function ChoresPage() {
                               ? { ...c, title: draft.title, assignedTo: draft.assignedTo || null, points: draft.points }
                               : c
                           ));
-                          addAuditLog('chore', `Recurring template "${rec.title}" updated to "${draft.title}" [${draft.points} pts]`);
+                          addAuditLog('chore', `Recurring chore "${rec.title}" updated to "${draft.title}" [${draft.points} pts]`);
                           triggerFeedback(`"${draft.title}" updated!`, 'success');
                         }}
                         className="text-[9px] px-3.5 py-1 rounded font-bold btn-primary-gold"
@@ -599,8 +647,9 @@ export default function ChoresPage() {
           </div>
 
           {/* ── Create Template Form ──────────────────────────────────────── */}
+          {showAddRecurring && (
           <div className="pt-4 border-t border-[var(--border-color)] space-y-3">
-            <span className="text-[10px] font-bold text-[var(--foreground)] uppercase block">Create Template</span>
+            <span className="text-[10px] font-bold text-[var(--foreground)] uppercase block">New Recurring Chore</span>
             <div className="space-y-2">
               <input
                 type="text"
@@ -660,16 +709,21 @@ export default function ChoresPage() {
                     <span className="text-[9px] text-[var(--text-muted)] font-semibold">days</span>
                   </div>
                 ) : (
-                  <div className="flex gap-1 flex-wrap">
-                    {WEEKDAY_OPTIONS.map(day => (
-                      <button
-                        key={day}
-                        onClick={() => toggleWeekday(day, newRecWeekdays, setNewRecWeekdays)}
-                        className={`text-[8px] px-2.5 py-1 rounded font-bold border transition-all ${newRecWeekdays.includes(day) ? 'btn-primary-gold' : 'bg-[var(--input-bg)] border-[var(--border-color)] text-[var(--text-muted)]'}`}
-                      >
-                        {day}
-                      </button>
-                    ))}
+                  <div className="space-y-2">
+                    <div className="flex gap-1 flex-wrap">
+                      {WEEKDAY_OPTIONS.map(day => (
+                        <button
+                          key={day}
+                          type="button"
+                          aria-pressed={newRecWeekdays.includes(day)}
+                          onClick={() => toggleWeekday(day, newRecWeekdays, setNewRecWeekdays)}
+                          className={`text-[8px] px-2.5 py-1 rounded font-bold border transition-all ${newRecWeekdays.includes(day) ? 'btn-primary-gold' : 'bg-[var(--input-bg)] border-[var(--border-color)] text-[var(--text-muted)]'}`}
+                        >
+                          {day}
+                        </button>
+                      ))}
+                    </div>
+                    <p className="text-[9px] text-[var(--text-muted)]">{formatWeekdaySummary(newRecWeekdays)}</p>
                   </div>
                 )}
               </div>
@@ -678,10 +732,11 @@ export default function ChoresPage() {
                 onClick={handleAddTemplate}
                 className="w-full text-[9px] py-1.5 rounded-xl font-bold transition-all btn-primary-gold"
               >
-                Add Template
+                Add Recurring Chore
               </button>
             </div>
           </div>
+          )}
         </div>
       </div>
     </div>

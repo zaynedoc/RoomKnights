@@ -3,7 +3,7 @@
 import React from 'react';
 import { useApp } from '../../../context/AppContext';
 import { InfoTooltip } from '../../../components/InfoTooltip';
-import { Sun, Moon, Zap, Grid, Sparkles, Dot, Ban } from 'lucide-react';
+import { Check, Eye, Sun, Moon, Zap, Grid, Sparkles, Dot, Ban } from 'lucide-react';
 
 type BgType = 'none' | 'beams' | 'grid' | 'glow' | 'dots';
 
@@ -13,6 +13,16 @@ const BG_OPTIONS: { id: BgType; label: string; icon: React.ReactNode; desc: stri
   { id: 'grid', label: 'Grid', icon: <Grid size={16} />, desc: 'Animated grid cells' },
   { id: 'glow', label: 'Glow', icon: <Sparkles size={16} />, desc: 'Radial accent glow' },
   { id: 'dots', label: 'Dots', icon: <Dot size={16} />, desc: 'Dot-grid pattern' },
+];
+
+type AccessibilityMode = 'none' | 'deuteranopia' | 'protanopia' | 'tritanopia' | 'high-contrast';
+
+const ACCESSIBILITY_MODES: { id: AccessibilityMode; label: string; description: string }[] = [
+  { id: 'none', label: 'None', description: 'Use the standard UCF Gold palette.' },
+  { id: 'deuteranopia', label: 'Deuteranopia', description: 'Use blue and amber status cues.' },
+  { id: 'protanopia', label: 'Protanopia', description: 'Use violet and orange status cues.' },
+  { id: 'tritanopia', label: 'Tritanopia', description: 'Use pink and orange status cues.' },
+  { id: 'high-contrast', label: 'High Contrast', description: 'Maximize text and border contrast.' },
 ];
 
 function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
@@ -35,8 +45,6 @@ export default function SettingsPage() {
     setThemeMode,
     busyWeekMode,
     setBusyWeekMode,
-    soundEnabled,
-    setSoundEnabled,
     handleResetData,
     triggerFeedback,
     accentColor,
@@ -48,6 +56,15 @@ export default function SettingsPage() {
     bgSpeed,
     setBgSpeed,
   } = useApp();
+
+  const toggleAccessibilityMode = (mode: AccessibilityMode) => {
+    const nextMode = accessibilityMode === mode ? 'none' : mode;
+    setAccessibilityMode(nextMode);
+    triggerFeedback(
+      nextMode === 'none' ? 'Accessibility mode reset to UCF Gold' : `${ACCESSIBILITY_MODES.find(option => option.id === nextMode)?.label} mode applied`,
+      'info'
+    );
+  };
 
   return (
     <div className="space-y-6 max-w-2xl mx-auto animate-fadeIn">
@@ -113,6 +130,48 @@ export default function SettingsPage() {
                   Reset
                 </button>
               )}
+            </div>
+          </div>
+
+          {/* Accessibility modes */}
+          <div className="settings-option-row" style={{ flexDirection: 'column', gap: '0.75rem' }}>
+            <div className="settings-option-info" style={{ maxWidth: '100%' }}>
+              <h3 className="settings-option-title">Colorblind Filters</h3>
+              <p className="settings-option-desc">Choose one display mode. Selecting the active mode again returns to the standard palette.</p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full">
+              {ACCESSIBILITY_MODES.map((mode) => {
+                const isActive = accessibilityMode === mode.id;
+                return (
+                  <button
+                    key={mode.id}
+                    type="button"
+                    aria-pressed={isActive}
+                    onClick={() => toggleAccessibilityMode(mode.id)}
+                    className={`relative text-left p-3 rounded-2xl border transition-all theme-transition-bg ${isActive
+                      ? 'border-[var(--gold-bg)] bg-[var(--input-bg)] text-[var(--gold-text)]'
+                      : 'border-[var(--border-color)] bg-[var(--input-bg)]/60 text-[var(--text-muted)] hover:border-[var(--gold-border)] hover:text-[var(--foreground)]'
+                      }`}
+                  >
+                    <span className="block text-[10px] font-bold uppercase tracking-wider pr-6">{mode.label}</span>
+                    <span className="block text-[9px] mt-1 leading-relaxed">{mode.description}</span>
+                    {isActive && <Check size={14} className="absolute right-3 top-3" aria-hidden="true" />}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="w-full flex items-center gap-3 p-3 rounded-2xl border border-[var(--border-color)] bg-[var(--card-bg)] theme-transition-bg">
+              <Eye size={15} className="text-[var(--gold-text)] shrink-0" aria-hidden="true" />
+              <div className="min-w-0">
+                <span className="block text-[10px] font-bold text-[var(--foreground)]">Preview: {ACCESSIBILITY_MODES.find(mode => mode.id === accessibilityMode)?.label}</span>
+                <span className="text-[9px] text-[var(--text-muted)]">Completed chores use a checkmark. Alerts use an alert icon and label.</span>
+              </div>
+              <div className="ml-auto flex items-center gap-1.5 shrink-0">
+                <span className="indicator-badge-success text-[9px] font-bold px-2 py-1 rounded-lg">Done</span>
+                <span className="indicator-badge-alert text-[9px] font-bold px-2 py-1 rounded-lg">Alert</span>
+              </div>
             </div>
           </div>
 
@@ -194,35 +253,6 @@ export default function SettingsPage() {
             />
           </div>
 
-          {/* Colorblind options */}
-          <div className="settings-option-row">
-            <div className="settings-option-info">
-              <h3 className="settings-option-title">Colorblind Filters</h3>
-              <p className="settings-option-desc">Modifies highlight overlays and adds explicit symbols/icons to indicators to support colorblind conditions.</p>
-            </div>
-            <div className="bg-[var(--input-bg)] border border-[var(--border-color)] px-3 py-2 rounded-xl shrink-0 theme-transition-bg">
-              <select
-                value={accessibilityMode}
-                onChange={(e) => setAccessibilityMode(e.target.value as any)}
-                className="bg-transparent text-xs text-[var(--foreground)] font-bold focus:outline-none cursor-pointer"
-              >
-                <option value="none" className="bg-[var(--card-bg)] text-[var(--foreground)]">None (UCF Gold)</option>
-                <option value="deuteranopia" className="bg-[var(--card-bg)] text-[var(--foreground)]">Deuteranopia</option>
-                <option value="protanopia" className="bg-[var(--card-bg)] text-[var(--foreground)]">Protanopia</option>
-                <option value="tritanopia" className="bg-[var(--card-bg)] text-[var(--foreground)]">Tritanopia</option>
-                <option value="high-contrast" className="bg-[var(--card-bg)] text-[var(--foreground)]">High Contrast</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Audio Feedback */}
-          <div className="settings-option-row">
-            <div className="settings-option-info">
-              <h3 className="settings-option-title">Oscillating Tone Feedback</h3>
-              <p className="settings-option-desc">Plays responsive audio signals representing completed/warning states for multimodal accessibility.</p>
-            </div>
-            <Toggle on={soundEnabled} onToggle={() => setSoundEnabled(!soundEnabled)} />
-          </div>
         </div>
 
         <div className="pt-6 border-t border-[var(--border-color)] flex items-center justify-between gap-4 flex-wrap">

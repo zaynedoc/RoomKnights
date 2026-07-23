@@ -83,8 +83,6 @@ interface AppContextType {
   setThemeMode: (mode: any) => void;
   busyWeekMode: boolean;
   setBusyWeekMode: (busy: boolean) => void;
-  soundEnabled: boolean;
-  setSoundEnabled: (sound: boolean) => void;
   notificationsOpen: boolean;
   setNotificationsOpen: (open: boolean) => void;
 
@@ -167,7 +165,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [accessibilityMode, setAccessibilityMode] = useState<'none' | 'deuteranopia' | 'protanopia' | 'tritanopia' | 'high-contrast'>('none');
   const [themeMode, setThemeMode] = useState<'dark' | 'light'>('dark');
   const [busyWeekMode, setBusyWeekMode] = useState<boolean>(false);
-  const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const [notificationsOpen, setNotificationsOpen] = useState<boolean>(false);
 
   // Appearance
@@ -315,34 +312,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   const triggerFeedback = (text: string, type: 'success' | 'info' | 'alert' = 'success') => {
     setInlineNotification({ text, type });
-    if (soundEnabled && typeof window !== 'undefined') {
-      try {
-        const context = new (window.AudioContext || (window as any).webkitAudioContext)();
-        const osc = context.createOscillator();
-        const gain = context.createGain();
-        osc.connect(gain);
-        gain.connect(context.destination);
-
-        if (type === 'success') {
-          osc.frequency.setValueAtTime(587.33, context.currentTime); // D5
-          osc.frequency.setValueAtTime(880, context.currentTime + 0.1); // A5
-          gain.gain.setValueAtTime(0.05, context.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.005, context.currentTime + 0.35);
-          osc.start();
-          osc.stop(context.currentTime + 0.35);
-        } else if (type === 'alert') {
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(220, context.currentTime);
-          osc.frequency.setValueAtTime(180, context.currentTime + 0.15);
-          gain.gain.setValueAtTime(0.05, context.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.005, context.currentTime + 0.3);
-          osc.start();
-          osc.stop(context.currentTime + 0.3);
-        }
-      } catch (e) {
-        // Block audio context failure bypass
-      }
-    }
   };
 
   // Load state from localStorage on mount
@@ -819,8 +788,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         setThemeMode,
         busyWeekMode,
         setBusyWeekMode,
-        soundEnabled,
-        setSoundEnabled,
         notificationsOpen,
         setNotificationsOpen,
 
