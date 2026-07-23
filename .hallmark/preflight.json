@@ -1,0 +1,14 @@
+{
+  "scanned_at": "2026-07-22",
+  "framework": "Next.js App Router",
+  "font_stack": ["Geist", "Geist Mono"],
+  "palette_source": "app/globals.css CSS custom properties",
+  "motion": "framer-motion installed; existing UI uses restrained CSS transitions",
+  "spacing": "Tailwind utility spacing with existing card and section patterns",
+  "preserve": [
+    "Geist typography",
+    "gold accent and CSS variable theme system",
+    "current spacing, rounded-card, and button patterns",
+    "localStorage prototype model"
+  ]
+}

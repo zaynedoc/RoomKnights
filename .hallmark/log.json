@@ -1,0 +1,18 @@
+[
+  {
+    "date": "2026-07-22",
+    "macrostructure": "Bento Grid",
+    "theme": "RoomKnights existing dark/gold",
+    "theme_axes": "dark / geometric-sans / chromatic-amber",
+    "enrichment": "Tier-A CSS grid and product snippets",
+    "brief": "RoomKnights landing redesign with product preview cards"
+  },
+  {
+    "date": "2026-07-22",
+    "macrostructure": "Narrative Workflow",
+    "theme": "RoomKnights existing dark/gold",
+    "theme_axes": "dark / geometric-sans / chromatic-amber",
+    "enrichment": "none",
+    "brief": "RoomKnights public landing and demo login"
+  }
+]

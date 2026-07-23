@@ -1,0 +1,46 @@
+/* Hallmark · pre-emit critique: P5 H5 E4 S5 R4 V5 */
+/* Hallmark · genre: modern-minimal · macrostructure: Bento Grid · F1 knobs: tiles=6, spans=irregular, border=hairline all · theme: RoomKnights existing dark/gold · enrichment: Tier-A CSS grid and product snippets · nav: N5 · footer: Ft2
+ * audience: university roommate groups · use: enter the demo and understand the hosted path · tone: restrained SaaS
+ * contrast: pass (40-41) · nav: N5 · footer: Ft2 · slop: pass (42-45) · honest: pass (46) · chrome: pass (47) · tokens: pass (48) · responsive: pass (49) · mobile: pass (34, 49-57)
+ */
+:root {
+  --color-paper: var(--background);
+  --color-surface: var(--card-bg);
+  --color-surface-raised: var(--input-bg);
+  --color-ink: var(--foreground);
+  --color-muted: var(--text-muted);
+  --color-rule: var(--border-color);
+  --color-accent: var(--gold-bg);
+  --color-accent-text: var(--gold-text);
+  --color-accent-ink: var(--background);
+  --color-focus: var(--gold-text);
+  --color-grid-line: color-mix(in srgb, var(--color-rule) 68%, transparent);
+  --color-surface-glass: color-mix(in srgb, var(--color-surface) 78%, transparent);
+  --color-accent-wash: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface));
+  --color-accent-wash-strong: color-mix(in srgb, var(--color-accent) 20%, var(--color-surface-raised));
+  --shadow-demo: 0 1.5rem 3.5rem color-mix(in srgb, var(--background) 72%, transparent);
+  --shadow-demo-soft: 0 0.75rem 1.75rem color-mix(in srgb, var(--background) 48%, transparent);
+  --font-display: var(--font-geist-sans);
+  --font-body: var(--font-geist-sans);
+  --font-outlier: var(--font-geist-mono);
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+  --space-4xl: 8rem;
+  --text-display: clamp(2.8rem, 6vw, 5.25rem);
+  --hero-top: clamp(9rem, 16vw, 12rem);
+  --tile-row: 12rem;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long: 420ms;
+  --radius-card: 1.5rem;
+  --radius-control: 0.875rem;
+}

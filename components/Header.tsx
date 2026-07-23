@@ -54,7 +54,7 @@ export const Header: React.FC = () => {
       <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
 
         {/* Brand */}
-        <div className="shrink-0 cursor-pointer" onClick={() => navTo('/dashboard')}>
+        <div className="shrink-0 cursor-pointer" onClick={() => navTo('/')}>
           <span className="font-black text-lg tracking-wider text-[var(--foreground)]">
             ROOM<span style={{ color: 'var(--gold-text)' }}>KNIGHTS</span>
           </span>
